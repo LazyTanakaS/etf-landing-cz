@@ -15,3 +15,4 @@ Success criterion: could we launch ads on this page tomorrow.
   "unlock the power of..." copy, no fake testimonials or fake counters.
 - Small, incremental commits. Plan before code.
 - Decisions belong to the author; propose options with trade-offs.
+- Reply to the author in Czech, including explanations. Code, comments and commits in English.
