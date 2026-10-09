@@ -54,7 +54,7 @@ Kde se AI mýlila nebo nebyla spolehlivá:
 - Blok „Co uvádějí brokeři" tvrdil, že u Degira, XTB a Portu nebylo nic nalezeno. Platilo to jen před mým ověřením Degira, text jsem nechal opravit.
 - Číslo 4 537,50 Kč dala do hero jako pevný text. Požadoval jsem, aby se počítalo funkcí kalkulačky z `etfs.ts`.
 - Drobný text v hero A byl na první obrazovku mobilu příliš dlouhý a podnadpis odkazoval na „kalkulačku pod tabulkou", i když pořadí sekcí je jiné. Oboje opraveno.
-- Tvrdila, že `docs/glossary-cs.md` neexistuje. Soubor existoval.
+- Po vytvoření `docs/glossary-cs.md` dál tvrdila, že soubor neexistuje (poprvé to platilo, soubor jsem vytvořil až poté).
 - Navrhla nahradit „kalkulačka" slovem „kalkulátor". Nechal jsem „kalkulačka" (běžnější české slovo).
 
 Moje rozhodnutí, ne AI:
@@ -63,3 +63,5 @@ Moje rozhodnutí, ne AI:
 - Sloupec UCITS v první verzi vypuštěn, protože VUAA nemám ověřený z primárního zdroje.
 - ETF jako střední rod (jednotné „americké ETF", množné „americká ETF"), řazení tabulky podle TER a při shodě abecedně.
 - Zachována slova „kalkulačka" a „kótován".
+
+Claude Code v několika sessions odpovídal částečně rusky (můj pracovní jazyk), proto jsou v exportech ruské slova. Texty stránky, data, kód a dokumentace jsou česky nebo anglicky.
