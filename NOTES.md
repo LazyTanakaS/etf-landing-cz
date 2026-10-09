@@ -5,7 +5,7 @@ Hlavní práce (strategie, ověřování dat, texty, kód a testy) probíhala v 
 Vedle toho jsem používal samostatný chat s Claude (aplikace Claude, mimo Claude Code). Jeho záznam v `ai-log/` není, protože příkaz `/export` patří jen ke Claude Code. Chat jsem použil na:
 
 - plán práce na týden a pořadí sessions,
-- přípravu startovních promptů: první prompt vznikl z mého návrhu v Miro, prošel skillem prompt-master a [doplnit: co jsem upravil],
+- přípravu startovních promptů: první prompt vznikl z mého návrhu v Miro, prošel skillem prompt-master téměř beze změn,
 - kontrolu odpovědí agenta z Claude Code, například nesrovnalostí v TER nebo chybějících zdrojů,
 - kontrolu české terminologie a formulací.
 
