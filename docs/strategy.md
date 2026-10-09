@@ -154,3 +154,12 @@ Vlastnosti k otestování:
 Pro srovnání, konvence konce měsíce při n = 120 a TER 0,03 % / 0,06 % / 0,18 %: 892,50 / 1 785 / 5 355 Kč (rozdíl 0,18 % vs 0,03 %: 4 462,50 Kč místo 4 537,50 Kč).
 
 Hodnoty v tabulce jsou výpočet z uvedeného vzorce, ne data o fondech.
+
+## Změny po session copy
+
+Texty jsou v `docs/copy-cs.md`. Oproti oddílům 2, 4 a 7 platí:
+
+- Sloupec "evropský ekvivalent (UCITS)" je v první verzi vypuštěn. VUAA není v `data/`. Tabulka má 4 sloupce.
+- Reklamy ani hero nezmiňují počet ani jména brokerů. Pokrytí je částečné: doložené jsou Interactive Brokers, Degiro a Fio, u XTB a Portu stránka uvádí, že jsme nic nenašli.
+- Číslo rozdílu mezi nejnižším a nejvyšším TER (v ilustraci 4 537,50 Kč) je přesunuto ke kalkulačce a není to pevný text. Počítá se za běhu stejnou funkcí jako kalkulačka z hodnot v `etfs.ts` (vklad 5 000 Kč, 120 měsíců). Vzorec: příloha A.
+- Riziko: důkaz pro Fio je z roku 2022 (článek z 19. 1. 2022). Stav se mohl změnit, stránka to u citace uvádí.
