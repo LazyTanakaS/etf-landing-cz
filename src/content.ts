@@ -78,6 +78,35 @@ export const calculatorContent = {
     `Pro představu, ilustrace, výpočet: při ${deposit} měsíčně po dobu ${years} let (vloženo ${invested}), bez zhodnocení a bez poplatků brokera, je rozdíl mezi nejnižším (${minTer}) a nejvyšším (${maxTer}) poplatkem fondu z této tabulky ${gap}.`,
 } as const
 
+// Stored with every lead (leads.consent_text_version) so a lead can be matched
+// to the exact consent wording it agreed to. The text below still contains the
+// [PROVOZOVATEL] placeholders. When the operator fills them in, the wording
+// changes, so this MUST be raised to 'v2' (and 'v3', ...) in the same commit.
+// The database accepts 'v' plus 1-3 digits (leads_consent_text_version_check).
+export const CONSENT_TEXT_VERSION = 'v1'
+
+// docs/copy-cs.md, section 6 (form). The consent text is [právní riziko]:
+// purpose and controller are for [PROVOZOVATEL] to fill in.
+export const leadFormContent = {
+  heading: 'Souhrn pro váš scénář',
+  intro:
+    'Po zadání e-mailu se na obrazovce zobrazí souhrn: částka, doba, všech pět fondů, rozpis po letech a otázky pro brokera. E-mailem ho neposíláme.',
+  emailLabel: 'E-mail',
+  emailPlaceholder: 'jmeno@priklad.cz',
+  consent:
+    'Souhlasím se zpracováním e-mailové adresy za účelem [PROVOZOVATEL: účel]. Správce: [PROVOZOVATEL: název, kontakt]. Souhlas mohu kdykoli odvolat na [PROVOZOVATEL: kontakt].',
+  submit: 'Zobrazit souhrn',
+  note: 'Souhrn se vytvoří ve vašem prohlížeči. Zadanou částku a dobu neukládáme.',
+  emailError: 'Zadejte e-mail ve tvaru jmeno@domena.cz.',
+  consentError: 'Bez souhlasu souhrn zobrazit nemůžeme.',
+  // Proposal, author to approve (návrh, schválí autor). Not in
+  // docs/copy-cs.md yet: the author moves the approved wording there.
+  sending: 'Odesílám…',
+  sendError:
+    'Odeslání se nepodařilo. Zkontrolujte připojení a zkuste to znovu. Váš e-mail ve formuláři zůstal.',
+  retry: 'Zkusit znovu',
+} as const
+
 // docs/copy-cs.md, section 8 (risk notice). The final wording is for
 // [PROVOZOVATEL] or a lawyer to approve.
 export const riskContent = {

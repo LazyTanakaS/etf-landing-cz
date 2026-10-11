@@ -2,6 +2,7 @@ import { Calculator } from './components/Calculator'
 import { EtfTable } from './components/EtfTable'
 import { Footer } from './components/Footer'
 import { Hero } from './components/Hero'
+import { LeadForm } from './components/LeadForm'
 import { etfs, sortByTer } from './data/etfs'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <main>
         <EtfTable items={sorted} />
         <Calculator items={sorted} />
+        <LeadForm />
       </main>
       <Footer />
     </>
