@@ -53,6 +53,7 @@ Slova "kalkulačka" a "kótován" se nemění.
   - IVV a SCHD: "datum na stránce neuvedeno".
   - VTI: "údaj ze stránky fondu, prospekt neověřen".
 - Buňka dostupnost (všechny řádky): Záleží na brokerovi. Ověřte před nákupem.
+- Štítek nad velkým číslem TER v mobilní kartě (session 06b, schváleno autorem): TER
 - Pod tabulkou: QQQ je podle stránky emitenta kótován na Nasdaq, ne na NYSE. Poplatek fondu je jen jedna ze složek nákladů. Poplatky brokera, směna měn a daně v něm nejsou.
 - Proč: nadpis "americká ETF" místo "NYSE" kvůli QQQ a poznámka to říká otevřeně. U každého čísla je zdroj a datum. Řazení podle symbolu je jednoznačné i dokud nejsou vyplněné názvy.
 - [právní riziko]: sloupec "Dostupnost". Zda stačí "záleží na brokerovi" a zda je nutné i "ověřte".
@@ -79,6 +80,7 @@ Slova "kalkulačka" a "kótován" se nemění.
 - Chyba u vkladu: Zadejte měsíční vklad v celých korunách od 100 do 1 000 000.
 - Chyba u doby: Zadejte dobu investování v celých letech od 1 do 20.
 - Proč mez 20 let: do 20 stačí tři tvary (rok, roky, let). U složených čísel (21 až 24, 31 až 34 a dál) nemám tvar ověřený, proto je mez 20.
+- Jednotka u pole Doba investování se mění podle zadaného čísla (session 06b, schváleno autorem): 1 rok, 2 až 4 roky, 5 až 20 let. Stejná slova jako v tvaru roku výše, místo statického "roky".
 - Pod výsledkem: Je to jen poplatek fondu. Poplatky brokera, směna měn a daně v něm nejsou. Výsledek není předpověď.
 - Věta s předpokladem: Předpoklad výpočtu: vkládáte na začátku každého měsíce. Každý měsíc se z držené hodnoty účtuje jedna dvanáctina ročního poplatku fondu (TER). Zhodnocení 0 %, bez poplatků brokera a směny měn.
 - Proč: předpoklad stojí hned u výsledku a odpovídá vzorci z přílohy A strategie. Výchozí hodnoty vycházejí ze zdrojového vektoru a v textu jsou označené jako ilustrace.
@@ -144,6 +146,7 @@ Obecně platné znění. Finální podobu určí [PROVOZOVATEL] nebo právník.
 - Stránka je informativní. Není investičním poradenstvím ani doporučením koupit či prodat konkrétní fond.
 - Daňové zacházení závisí na vaší situaci. Stránka ho neposuzuje.
 - Provozovatel: `[PROVOZOVATEL: název, sídlo, kontakt]`.
+- Nadpis patičky (session 06b, schváleno autorem): Zdroje. Pod ním seznam: symbol, zdroj, "načteno" a datum (stejná data jako v tabulce).
 
 Musí posoudit [PROVOZOVATEL]:
 

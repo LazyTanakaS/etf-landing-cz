@@ -1,23 +1,129 @@
-:root {
-  --bg: #fbfaf7;
-  --surface: #ffffff;
-  --text: #1c2024;
-  --muted: #565d66;
-  --border: #d8d4cb;
-  --accent: #0b5c4f;
-  --accent-text: #ffffff;
-  --error: #a02a1c;
+/* Newsreader (SIL OFL, see public/fonts/OFL.txt), self-hosted. Only the 600
+   latin file is preloaded (index.html); the other files load on demand through
+   unicode-range. Czech letters live in latin (U+0000-00FF) and latin-ext
+   (U+0100-017F). */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin-ext-500-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --gutter: 1rem;
-  --max-width: 64rem;
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin-500-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin-ext-600-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin-600-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched stand-ins for the swap period (values computed from the font
+   files, see NOTES.md). One face per weight: Georgia Regular for 500, Georgia
+   Bold for 600, so the browser does not fake a bold. */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  font-weight: 500;
+  src: local('Georgia');
+  size-adjust: 97.1%;
+  ascent-override: 75.7%;
+  descent-override: 27.3%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Newsreader Fallback';
+  font-weight: 600;
+  src: local('Georgia Bold');
+  size-adjust: 86%;
+  ascent-override: 85.5%;
+  descent-override: 30.8%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* colour */
+  --paper: #fff9f2;
+  --parchment: #f5e9d8;
+  --latte: #e6d5be;
+  --espresso: #411e0a;
+  --ink: #2a1810;
+  --muted: #6b5444;
+  --mocha: #7a4a2b;
+  --caramel: #d98e3f;
+  --link-dark: #e7b77a;
+  --error: #a02a1c;
+  --divider: #d2bea2;
+  --zebra: #fbf1e4;
+
+  /* type */
+  --font-serif:
+    'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.25rem;
+  --fs-h2: 1.75rem;
+  --fs-h1: 2.25rem;
+
+  /* shape */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --border: 2px solid var(--espresso);
+  --rule: 1px solid var(--espresso);
+  --hair: 1px solid var(--divider);
+  --shadow: 4px 4px 0 var(--espresso);
+  --shadow-pressed: 2px 2px 0 var(--espresso);
+  --shadow-dark: 4px 4px 0 var(--latte);
+  --shadow-dark-pressed: 2px 2px 0 var(--latte);
+
+  /* layout */
+  --gutter: 16px;
+  --maxw: 64rem;
+  /* Minimum tap size for fields. Buttons are 48px (.btn). */
+  --tap: 44px;
+
+  --focus-ring: var(--mocha);
 
   color-scheme: light;
-  font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--text);
-  background: var(--bg);
 }
 
 *,
@@ -28,264 +134,645 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+p {
+  margin: 0;
 }
 
 /* Page blocks share one column and one gutter. */
-.hero,
-main,
-footer {
-  max-width: var(--max-width);
+.wrap,
+.section {
+  max-width: var(--maxw);
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
 
-h1,
-h2 {
-  line-height: 1.2;
-  margin: 0 0 0.75rem;
+.section {
+  padding-block: 0 56px;
 }
 
-h1 {
-  font-size: 1.75rem;
-}
-
-h2 {
-  font-size: 1.375rem;
-}
-
-p {
-  margin: 0 0 0.75rem;
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 a {
-  color: var(--accent);
+  color: var(--mocha);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--espresso);
+  text-decoration-thickness: 2px;
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
-.hero {
-  padding-block: 2rem 1.5rem;
+/* Dark bands (hero, footer): light links, light focus ring. The .btn is
+   excluded so its espresso-on-caramel text is not overridden (specificity). */
+.on-dark {
+  --focus-ring: var(--link-dark);
 }
 
-.hero-lead {
-  font-size: 1.125rem;
-  max-width: 40rem;
+.on-dark a:not(.btn) {
+  color: var(--link-dark);
 }
 
-.button {
-  display: inline-block;
-  padding: 0.75rem 1.25rem;
-  margin-block: 0.5rem 1rem;
-  background: var(--accent);
-  color: var(--accent-text);
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 0.375rem;
+.on-dark a:not(.btn):hover {
+  color: var(--paper);
+}
+
+/* Placeholders for the operator's data. */
+.ph {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--latte);
+  color: var(--ink);
+  border: 1px dashed var(--mocha);
+  border-radius: 3px;
+  padding: 0 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.on-dark .ph {
+  background: transparent;
+  color: var(--link-dark);
+  border-color: var(--link-dark);
 }
 
 .small {
-  display: block;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--muted);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+}
+
+/* Section heading with a double rule above. */
+.sec-head {
+  border-top: 5px double var(--espresso);
+  padding-top: 16px;
+  margin-bottom: 24px;
+}
+
+.sub {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+/* Buttons: 48px, hard shadow, shadow shrinks when pressed. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.2;
+  color: var(--espresso);
+  background: var(--caramel);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+.btn:hover {
+  color: var(--espresso);
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-pressed);
+}
+
+.btn:disabled {
+  background: var(--latte);
+  color: var(--muted);
+  border-color: var(--muted);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.on-dark .btn {
+  box-shadow: var(--shadow-dark);
+}
+
+.on-dark .btn:active {
+  box-shadow: var(--shadow-dark-pressed);
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+/* Hero. */
+.hero {
+  background: var(--espresso);
+  color: var(--paper);
+  padding-block: 20px 56px;
+}
+
+.masthead {
+  height: 8px;
+  border-top: 3px solid var(--latte);
+  border-bottom: 1px solid var(--latte);
+}
+
+.hero-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.hero-side {
+  display: grid;
+  gap: 28px;
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--parchment);
+  max-width: 34rem;
+}
+
+.hero-note {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--latte);
+  max-width: 32rem;
 }
 
 main {
-  padding-block: 1rem 2rem;
-}
-
-/* Table: stacked cards on narrow screens, a real table from 40rem. */
-table,
-tbody,
-caption {
   display: block;
+  padding-top: 56px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-caption {
-  text-align: left;
+/* Fund table. Cards below 40rem, a real table from 40rem. */
+.caption {
+  font-size: var(--fs-sm);
   color: var(--muted);
-  font-size: 0.875rem;
-  padding-bottom: 0.75rem;
+  margin-bottom: 20px;
+  max-width: 44rem;
 }
 
-thead {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
+.fund-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
 }
 
-tr,
-th,
-td {
-  display: block;
+.fund-card {
+  background: var(--parchment);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 6px;
 }
 
-tbody tr {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
-}
-
-th,
-td {
-  text-align: left;
-  font-weight: 400;
-  padding: 0.25rem 0;
-  overflow-wrap: anywhere;
-}
-
-td::before {
-  content: attr(data-label);
-  display: block;
-  font-size: 0.8125rem;
-  color: var(--muted);
+.fund-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: var(--rule);
 }
 
 .ticker {
-  display: block;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
 }
 
 .fund-name {
   display: block;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.ter-big {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.ter-top {
+  text-align: right;
+}
+
+.ter-label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.fund-dl {
+  margin: 0;
+}
+
+.fund-row {
+  display: grid;
+  gap: 3px;
+  padding-block: 12px;
+  border-bottom: var(--hair);
+}
+
+.fund-row:last-child {
+  border-bottom: 0;
+}
+
+.fund-row dt {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
-/* Calculator: fields stacked on narrow screens, side by side from 40rem. */
-#kalkulacka {
-  margin-top: 2.5rem;
+.fund-row dd {
+  margin: 0;
 }
 
-.calc-fields {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.calc-field label {
+.src {
   display: block;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--muted);
 }
 
-.calc-input-row {
+.missing {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.caveat {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px dashed var(--mocha);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  margin-block: 6px 2px;
+}
+
+.caveat svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.fund-table-box {
+  display: none;
+}
+
+.funds {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.funds th {
+  text-align: left;
+  vertical-align: bottom;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 14px 20px;
+  background: var(--parchment);
+  border-bottom: var(--border);
+}
+
+.funds tbody th {
+  vertical-align: top;
+  padding: 20px;
+  background: transparent;
+  border-bottom: var(--hair);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.funds td {
+  padding: 20px;
+  vertical-align: top;
+  border-bottom: var(--hair);
+}
+
+.funds tbody tr:nth-child(even) th,
+.funds tbody tr:nth-child(even) td {
+  background: var(--zebra);
+}
+
+.funds tbody tr:last-child th,
+.funds tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.funds .ter-big {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.note {
+  margin-top: 28px;
+  font-size: var(--fs-sm);
+  max-width: 44rem;
+  padding-top: 14px;
+  border-top: var(--rule);
+}
+
+/* Calculator: a parchment sheet, no shadow. */
+.sheet {
+  background: var(--parchment);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 18px;
+}
+
+.sheet .sec-head {
+  margin-bottom: 20px;
+}
+
+.sheet .sub,
+.assume,
+.example {
+  max-width: 42rem;
+}
+
+.fields {
+  display: grid;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.field label {
+  display: block;
+  font-weight: 650;
+  margin-bottom: 8px;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.control:focus-within {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.control input,
+.control select {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  /* 16px font keeps iOS from zooming on focus. */
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 0 14px;
+  flex: 1;
+  min-width: 0;
+  height: var(--tap);
+  font-variant-numeric: tabular-nums;
+}
+
+.control input:focus-visible,
+.control select:focus-visible {
+  outline: none;
+}
+
+.control input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.control select {
+  padding-right: 44px;
+  font-weight: 650;
+}
+
+.unit {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0 14px;
+  background: var(--latte);
+  border-left: var(--border);
+  font-weight: 650;
+  border-radius: 0 4px 4px 0;
 }
 
-/* 16px font keeps iOS from zooming on focus. */
-.calc-field input,
-.calc-field select {
-  width: 100%;
-  min-width: 0;
-  min-height: 2.75rem;
-  padding: 0.5rem 0.75rem;
-  font: inherit;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--muted);
-  border-radius: 0.375rem;
+.chev {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
-.calc-field input[aria-invalid='true'] {
+.control.is-invalid {
   border-color: var(--error);
-  border-width: 2px;
+  box-shadow: inset 0 0 0 1px var(--error);
 }
 
-.calc-error {
-  margin: 0.25rem 0 0;
-  color: var(--error);
-  font-weight: 600;
+.control.is-invalid .unit {
+  border-left-color: var(--error);
 }
 
-.calc-result {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.calc-result-line {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.calc-result p:last-child {
-  margin-bottom: 0;
-}
-
-/* Lead form. */
-#formular {
-  margin-top: 2.5rem;
-}
-
-.lead-field {
-  margin-bottom: 1rem;
-}
-
-.lead-field label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-/* 16px font keeps iOS from zooming on focus. */
-.lead-field input[type='email'] {
-  width: 100%;
-  min-width: 0;
-  min-height: 2.75rem;
-  padding: 0.5rem 0.75rem;
-  font: inherit;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--muted);
-  border-radius: 0.375rem;
-}
-
-.lead-field input[aria-invalid='true'][type='email'] {
-  border-color: var(--error);
-  border-width: 2px;
-}
-
-/* Checkbox and its long consent text side by side. */
-.lead-consent {
+.err {
   display: flex;
+  gap: 6px;
   align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.lead-consent input {
-  flex: none;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0.125rem 0 0;
-  accent-color: var(--accent);
-}
-
-.lead-consent label {
-  font-weight: 400;
-  margin-bottom: 0;
-}
-
-.lead-error {
-  margin: 0.25rem 0 0.75rem;
+  margin-top: 8px;
   color: var(--error);
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.err svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.calc-out {
+  display: grid;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.calc-out > [aria-live]:empty {
+  display: none;
+}
+
+.calc-side {
+  display: grid;
+  gap: 20px;
+}
+
+.result {
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.result-line {
+  font-size: var(--fs-lg);
+  line-height: 1.4;
+}
+
+.result-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  margin-block: 4px 6px;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.result-foot {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: var(--hair);
+  font-size: var(--fs-sm);
+}
+
+.assume {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.example {
+  padding-top: 18px;
+  border-top: 1px dashed var(--mocha);
+}
+
+/* Lead form: parchment with a hard shadow, because it is the action. */
+.form-card {
+  background: var(--parchment);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 24px 18px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.form-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.check {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding-block: 4px;
+}
+
+.check input {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  flex: none;
+  accent-color: var(--espresso);
+}
+
+.check-text {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}
+
+.alert {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 2px solid var(--error);
+  background: var(--paper);
+  color: var(--error);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-weight: 650;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.alert svg {
+  flex: none;
+  margin-top: 2px;
 }
 
 /* Honeypot: off screen, not display:none (some bots skip hidden fields). */
@@ -297,105 +784,192 @@ td::before {
   overflow: hidden;
 }
 
-.lead-submit {
-  min-height: 2.75rem;
-  padding: 0.75rem 1.25rem;
-  margin-block: 0.5rem 0.75rem;
-  background: var(--accent);
-  color: var(--accent-text);
-  font: inherit;
+/* Risk notice: body size (16px), numbers in the serif. */
+.risk-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: r;
+}
+
+.risk-list li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 14px;
+  border-top: var(--hair);
+}
+
+.risk-list li::before {
+  counter-increment: r;
+  content: counter(r);
+  font-family: var(--font-serif);
   font-weight: 600;
-  border: 0;
-  border-radius: 0.375rem;
-  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  color: var(--mocha);
 }
 
-.lead-submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.operator {
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: var(--rule);
+  font-weight: 650;
 }
 
-footer {
-  padding-block: 1.5rem 3rem;
-  border-top: 1px solid var(--border);
+/* Footer. */
+.footer {
+  background: var(--espresso);
+  color: var(--parchment);
+  padding-block: 20px 48px;
 }
 
-footer ul {
-  margin: 0 0 1rem;
-  padding-left: 1.25rem;
+.footer .masthead {
+  margin-bottom: 32px;
 }
 
-footer li {
-  margin-bottom: 0.5rem;
+.footer h2 {
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--paper);
+}
+
+.src-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-size: var(--fs-sm);
+}
+
+.src-list b {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--paper);
+  display: inline-block;
+  min-width: 3.4em;
+}
+
+.foot-op {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--muted);
+  font-size: var(--fs-sm);
 }
 
 @media (min-width: 40rem) {
   :root {
-    --gutter: 1.5rem;
+    --gutter: 24px;
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
+  }
+
+  .fund-list {
+    display: none;
+  }
+
+  .fund-table-box {
+    display: block;
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+
+  .sheet,
+  .form-card {
+    padding: 36px;
+  }
+
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fields .field:first-child {
+    grid-column: 1 / -1;
+    max-width: 20rem;
+  }
+
+  .btn-wide {
+    width: auto;
+  }
+
+  .src-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+}
+
+@media (min-width: 60rem) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
   }
 
   .hero {
-    padding-block: 3rem 2rem;
+    padding-block: 24px 88px;
   }
 
-  .calc-fields {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: end;
+    margin-top: 64px;
+  }
+
+  main {
+    padding-top: 88px;
+  }
+
+  .section {
+    padding-block: 0 88px;
+  }
+
+  .sheet,
+  .form-card {
+    padding: 48px;
+  }
+
+  .fields {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+
+  .fields .field:first-child {
+    grid-column: auto;
+    max-width: none;
+  }
+
+  .calc-out {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: 56px;
+  }
+
+  .risk-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 56px;
+  }
+
+  .risk-wrap .sec-head {
+    margin-bottom: 0;
+  }
+
+  .src-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  table {
-    display: table;
-    background: var(--surface);
-    border: 1px solid var(--border);
-  }
-
-  thead {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-    display: table-header-group;
-  }
-
-  tbody {
-    display: table-row-group;
-  }
-
-  caption {
-    display: table-caption;
-  }
-
-  tr {
-    display: table-row;
-  }
-
-  th,
-  td {
-    display: table-cell;
-    padding: 0.75rem 1rem;
-    vertical-align: top;
-    border-top: 1px solid var(--border);
-  }
-
-  thead th {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--muted);
-    border-top: 0;
-  }
-
-  tbody tr {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-  }
-
-  td::before {
-    content: none;
   }
 }

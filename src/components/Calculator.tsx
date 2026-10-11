@@ -6,11 +6,13 @@ import {
   parseYears,
   scenario,
   yearsForm,
+  yearsUnit,
 } from '../calculator'
 import { calculatorContent } from '../content'
 import type { Etf } from '../data/etfs'
 import { formatCzk, formatNumber, formatTer } from '../format'
 import { track } from '../track'
+import { AlertIcon, ChevronIcon } from './Icons'
 
 interface CalculatorProps {
   items: readonly Etf[]
@@ -31,7 +33,9 @@ export function Calculator({ items }: CalculatorProps) {
   const deposit = parseDeposit(depositText)
   const years = parseYears(yearsText)
   const result =
-    deposit !== null && years !== null ? scenario(deposit, etf.ter, years) : null
+    deposit !== null && years !== null
+      ? scenario(deposit, etf.ter, years)
+      : null
   const gap = illustration(items)
 
   // The defaults (5 000 Kč, 10 years) already show a valid result on load, so
@@ -45,112 +49,150 @@ export function Calculator({ items }: CalculatorProps) {
   const showDepositError = depositTouched && deposit === null
   const showYearsError = yearsTouched && years === null
 
+  // The result sentence is one string from content.ts. The fee and its full
+  // stop are cut out of it only to show the number large.
+  const feeText = result !== null ? `${formatCzk(result.fee, 2)}.` : ''
+  const resultLine =
+    result !== null && years !== null
+      ? text.result(
+          years,
+          text.yearsForms[yearsForm(years)],
+          formatCzk(result.fee, 2),
+          formatCzk(result.invested, 0),
+        )
+      : ''
+  const feeAt = resultLine.indexOf(feeText)
+
   return (
-    <section id="kalkulacka" aria-labelledby="kalkulacka-nadpis">
-      <h2 id="kalkulacka-nadpis">{text.heading}</h2>
-      <p>{text.subheading}</p>
-
-      <div className="calc-fields">
-        <div className="calc-field">
-          <label htmlFor="kalkulacka-fond">{text.fields.fund}</label>
-          <select
-            id="kalkulacka-fond"
-            value={ticker}
-            onChange={(event) => {
-              setTicker(event.target.value)
-              setInteracted(true)
-            }}
-          >
-            {items.map((item) => (
-              <option key={item.ticker} value={item.ticker}>
-                {item.ticker}
-              </option>
-            ))}
-          </select>
+    <section
+      className="section"
+      id="kalkulacka"
+      aria-labelledby="kalkulacka-nadpis"
+    >
+      <div className="sheet">
+        <div className="sec-head">
+          <h2 id="kalkulacka-nadpis">{text.heading}</h2>
+          <p className="sub">{text.subheading}</p>
         </div>
 
-        <div className="calc-field">
-          <label htmlFor="kalkulacka-vklad">{text.fields.deposit}</label>
-          <div className="calc-input-row">
-            <input
-              id="kalkulacka-vklad"
-              type="text"
-              inputMode="numeric"
-              autoComplete="off"
-              value={depositText}
-              onChange={(event) => {
-                setDepositText(event.target.value)
-                setInteracted(true)
-              }}
-              onBlur={() => setDepositTouched(true)}
-              aria-invalid={showDepositError}
-              aria-describedby={`kalkulacka-vklad-jednotka${showDepositError ? ' kalkulacka-vklad-chyba' : ''}`}
-            />
-            <span id="kalkulacka-vklad-jednotka">{text.units.deposit}</span>
+        <div className="fields">
+          <div className="field">
+            <label htmlFor="kalkulacka-fond">{text.fields.fund}</label>
+            <div className="control">
+              <select
+                id="kalkulacka-fond"
+                value={ticker}
+                onChange={(event) => {
+                  setTicker(event.target.value)
+                  setInteracted(true)
+                }}
+              >
+                {items.map((item) => (
+                  <option key={item.ticker} value={item.ticker}>
+                    {item.ticker}
+                  </option>
+                ))}
+              </select>
+              <ChevronIcon />
+            </div>
           </div>
-          {showDepositError && (
-            <p id="kalkulacka-vklad-chyba" className="calc-error">
-              {text.depositError(
-                formatNumber(limits.deposit.min),
-                formatNumber(limits.deposit.max),
+
+          <div className="field">
+            <label htmlFor="kalkulacka-vklad">{text.fields.deposit}</label>
+            <div className={`control${showDepositError ? ' is-invalid' : ''}`}>
+              <input
+                id="kalkulacka-vklad"
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                value={depositText}
+                onChange={(event) => {
+                  setDepositText(event.target.value)
+                  setInteracted(true)
+                }}
+                onBlur={() => setDepositTouched(true)}
+                aria-invalid={showDepositError}
+                aria-describedby={`kalkulacka-vklad-jednotka${showDepositError ? ' kalkulacka-vklad-chyba' : ''}`}
+              />
+              <span className="unit" id="kalkulacka-vklad-jednotka">
+                {text.units.deposit}
+              </span>
+            </div>
+            {showDepositError && (
+              <p id="kalkulacka-vklad-chyba" className="err">
+                <AlertIcon />
+                {text.depositError(
+                  formatNumber(limits.deposit.min),
+                  formatNumber(limits.deposit.max),
+                )}
+              </p>
+            )}
+          </div>
+
+          <div className="field">
+            <label htmlFor="kalkulacka-roky">{text.fields.years}</label>
+            <div className={`control${showYearsError ? ' is-invalid' : ''}`}>
+              <input
+                id="kalkulacka-roky"
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                value={yearsText}
+                onChange={(event) => {
+                  setYearsText(event.target.value)
+                  setInteracted(true)
+                }}
+                onBlur={() => setYearsTouched(true)}
+                aria-invalid={showYearsError}
+                aria-describedby={`kalkulacka-roky-jednotka${showYearsError ? ' kalkulacka-roky-chyba' : ''}`}
+              />
+              <span className="unit" id="kalkulacka-roky-jednotka">
+                {yearsUnit(years, text.yearsForms)}
+              </span>
+            </div>
+            {showYearsError && (
+              <p id="kalkulacka-roky-chyba" className="err">
+                <AlertIcon />
+                {text.yearsError(limits.years.min, limits.years.max)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="calc-out">
+          <div aria-live="polite" aria-atomic="true">
+            {result !== null && (
+              <div className="result">
+                <p className="result-line">
+                  {feeAt === -1 ? (
+                    resultLine
+                  ) : (
+                    <>
+                      {resultLine.slice(0, feeAt)}
+                      <span className="result-num">{feeText}</span>
+                      {resultLine.slice(feeAt + feeText.length)}
+                    </>
+                  )}
+                </p>
+                <p className="result-foot">{text.belowResult}</p>
+              </div>
+            )}
+          </div>
+          <div className="calc-side">
+            <p className="assume">{text.assumption}</p>
+            <p className="example">
+              {text.illustration(
+                formatCzk(gap.deposit, 0),
+                gap.years,
+                formatCzk(gap.invested, 0),
+                formatTer(gap.minTer),
+                formatTer(gap.maxTer),
+                formatCzk(gap.gap, 2),
               )}
             </p>
-          )}
-        </div>
-
-        <div className="calc-field">
-          <label htmlFor="kalkulacka-roky">{text.fields.years}</label>
-          <div className="calc-input-row">
-            <input
-              id="kalkulacka-roky"
-              type="text"
-              inputMode="numeric"
-              autoComplete="off"
-              value={yearsText}
-              onChange={(event) => {
-                setYearsText(event.target.value)
-                setInteracted(true)
-              }}
-              onBlur={() => setYearsTouched(true)}
-              aria-invalid={showYearsError}
-              aria-describedby={`kalkulacka-roky-jednotka${showYearsError ? ' kalkulacka-roky-chyba' : ''}`}
-            />
-            <span id="kalkulacka-roky-jednotka">{text.units.years}</span>
           </div>
-          {showYearsError && (
-            <p id="kalkulacka-roky-chyba" className="calc-error">
-              {text.yearsError(limits.years.min, limits.years.max)}
-            </p>
-          )}
         </div>
       </div>
-
-      <div aria-live="polite" aria-atomic="true">
-        {result !== null && years !== null && (
-          <div className="calc-result">
-            <p className="calc-result-line">
-              {text.result(
-                years,
-                text.yearsForms[yearsForm(years)],
-                formatCzk(result.fee, 2),
-                formatCzk(result.invested, 0),
-              )}
-            </p>
-            <p>{text.belowResult}</p>
-          </div>
-        )}
-      </div>
-      <p>{text.assumption}</p>
-      <p>
-        {text.illustration(
-          formatCzk(gap.deposit, 0),
-          gap.years,
-          formatCzk(gap.invested, 0),
-          formatTer(gap.minTer),
-          formatTer(gap.maxTer),
-          formatCzk(gap.gap, 2),
-        )}
-      </p>
     </section>
   )
 }

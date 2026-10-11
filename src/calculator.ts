@@ -42,6 +42,16 @@ export function yearsForm(years: number): YearsForm {
   return 'many'
 }
 
+// Word shown next to the years field: "rok", "roky" or "let".
+// `years` is null while the input is invalid; the old wording "roky" stays then.
+export function yearsUnit(
+  years: number | null,
+  words: Record<YearsForm, string>,
+): string {
+  if (years === null) return words.few
+  return words[yearsForm(years)]
+}
+
 // Calculator result for one fund. Rounding happens only when displaying.
 export function scenario(deposit: number, ter: number, years: number) {
   const months = years * 12

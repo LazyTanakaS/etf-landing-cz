@@ -134,3 +134,60 @@ Kde si agent nebyl jistý:
 
 - Hlavička Authorization s novým formátem publishable klíče (potvrzeno curl testem).
 - Stav úspěchu: formulář zmizí, žádný text až do souhrnné obrazovky v session 07.
+
+## Session 06: funnel tracking
+
+- Tracker is a pure module with injected dependencies (no jsdom needed);
+  62 tests passing, 12 mutations on tracker.ts, all caught.
+- Mentor error caught by the agent: I specified calc_used as "first valid
+  result", but the calculator shows a valid result on load (default values), so
+  it would have fired for every visitor. Fixed: it counts only after the first
+  change of fund, deposit or years.
+- A test was blind at first: vi.fn() attaches its own handler to a returned
+  promise, so a missing .catch was never an unhandled rejection. The test now
+  uses a plain function and listens for unhandledRejection.
+- funnel.sql was checked on a temporary local PostgreSQL with made-up data,
+  not on my Supabase project.
+- Session id lives in memory only (no sessionStorage, cookies), a deliberate
+  trade-off: a reload is a new session. Whether sending a random id without
+  consent falls under law 127/2005 is unverified; left for the operator.
+- Verified by hand: build + preview, five events once each, variant "a" from
+  utm_content, test rows deleted.
+
+## Session 06b: vizuální styl
+
+Styly (`index.css`), markup komponent (Hero, EtfTable, Calculator, LeadForm, Risks, Footer, Icons, Placeholders) a `splitPlaceholders` napsal agent po schváleném plánu. Funkci `yearsUnit` a její test píšu já (v `calculator.ts` je zatím stub, který vrací "roky").
+
+Co se dělalo:
+
+- Design "klidná banka + editorial, měkká káva": tokeny v `:root`, staré proměnné odstraněny.
+- Newsreader 500 a 600 self-hosted (latin + latin-ext woff2 z `@fontsource/newsreader` 5.3.0, OFL.txt přiložen), preload jen latin 600, bez externích požadavků.
+- Hero, tabulka (karty do 40rem, tabulka od 40rem), kalkulačka, formulář, rizika (nová komponenta `Risks`), patička "Zdroje".
+- Nové texty ("TER", "Zdroje") nejdřív v `docs/copy-cs.md`, potom v `content.ts`. Statické `units.years` odstraněno.
+
+Naměřeno (Chrome headless, build přes `vite preview`):
+
+- CTA v hero: espresso na karamelu, 5,58:1, výška 48 px. Oprava `.on-dark a:not(.btn)` funguje.
+- AA: 32 unikátních dvojic text/pozadí v běžném stavu, 0 selhání.
+- Bez horizontálního scrollu při 375, 640, 960 a 1440 px.
+- CLS 0 při woff2 zdrženém o 1,5 s (PerformanceObserver `layout-shift`, 375 i 1440 px); výška dokumentu před i po stejná.
+- Velikosti: CSS 12,73 kB (3,47 kB gzip), JS 239,56 kB (75,02 kB gzip), woff2 celkem 77 736 B (23 624 + 23 876 + 15 068 + 15 168).
+- Testy: 66 (62 + 4 pro `splitPlaceholders`). Mutace `splitPlaceholders`: 5 mutantů, všechny zachyceny.
+- Fallback "Newsreader Fallback": hodnoty z designu (96/92/24) jsem přepočítal z metrik souborů (průměrná šířka znaků, hhea ascent/descent). Dvě tváře: 500 = Georgia, size-adjust 97,1 %, ascent 75,7 %, descent 27,3 %; 600 = Georgia Bold, 86 %, 85,5 %, 30,8 %.
+
+Odchylky od designu:
+
+- `@media` místo container queries (zadání).
+- Tabulka bez `min-width: 40rem`, buňky se zalamují.
+- Věta výsledku kalkulačky zůstává jedna (text beze změny), číslo se jen vyřízne pro velké zobrazení; není samostatný štítek "Ilustrace, výpočet." a není tučný "Předpoklad výpočtu:".
+- Zdroje v patičce jsou odkazy, ne holý text.
+- Blok brokerů z designu neřešen (session 07).
+- `unicode-range` fontů podle Fontsource (plné latin a latin-ext), ne užší rozsah ze zadání.
+
+Neověřeno:
+
+- Chybové stavy formuláře a kalkulačky (`is-invalid`, `.err`, `.alert`) v prohlížeči.
+- Safari/iOS, ovládání z klávesnice, screen reader.
+- Fallback font jen v Chrome na macOS (Georgia je dostupná); na zařízeních bez Georgie se korekce neuplatní.
+- Dynamická jednotka u let, dokud nenapíšu `yearsUnit`.
+- Telefon a nasazení na Vercelu.

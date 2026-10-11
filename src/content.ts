@@ -26,6 +26,8 @@ export const tableContent = {
     ter: 'Poplatek fondu (TER)',
     availability: 'Dostupnost',
   },
+  // Label above the big TER number in the mobile card (session 06b).
+  terLabel: 'TER',
   exchangeMissing: 'neuvedeno',
   terAsOf: 'k datu',
   terAsOfMissing: 'datum na stránce neuvedeno',
@@ -49,7 +51,6 @@ export const calculatorContent = {
   },
   units: {
     deposit: 'Kč',
-    years: 'roky',
   },
   yearsForms: {
     one: 'rok',
@@ -121,4 +122,9 @@ export const riskContent = {
     'Daňové zacházení závisí na vaší situaci. Stránka ho neposuzuje.',
   ],
   operator: 'Provozovatel: [PROVOZOVATEL: název, sídlo, kontakt].',
+} as const
+
+// docs/copy-cs.md, section 8 (footer heading, session 06b).
+export const footerContent = {
+  heading: 'Zdroje',
 } as const

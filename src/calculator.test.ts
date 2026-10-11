@@ -5,6 +5,7 @@ import {
   parseYears,
   scenario,
   yearsForm,
+  yearsUnit,
 } from './calculator'
 import { etfs } from './data/etfs'
 
@@ -48,6 +49,25 @@ describe('parseYears', () => {
     expect(parseYears('-5')).toBeNull()
     expect(parseYears('2,5')).toBeNull()
     expect(parseYears('abc')).toBeNull()
+  })
+})
+
+describe('yearsUnit', () => {
+  const words = { one: 'rok', few: 'roky', many: 'let' }
+
+  it.each([
+    [1, 'rok'],
+    [2, 'roky'],
+    [4, 'roky'],
+    [5, 'let'],
+    [10, 'let'],
+    [20, 'let'],
+  ])('%i → %s', (years, expected) => {
+    expect(yearsUnit(years, words)).toBe(expected)
+  })
+
+  it('keeps "roky" while the input is invalid', () => {
+    expect(yearsUnit(null, words)).toBe('roky')
   })
 })
 
