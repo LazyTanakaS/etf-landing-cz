@@ -96,13 +96,41 @@ Moje rozhodnutí, ne AI:
 
 ## Session 04
 
-Vzorec a unit test napsal AI (podle přílohy A), já jsem je přepsal ručně a ověřil jsem je testy s hodnotami, které jsem spočítal sám. Původně jsem je chtěl psát sám (viz strategy.md, oddíl 9); rozhodl jsem se jinak.
+Vzorec (`totalFee`, `feeForYear`) a unit test napsal AI (podle přílohy A), já jsem je přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Původně jsem je chtěl psát sám (viz strategy.md, oddíl 9); rozhodl jsem se jinak. Logiku kalkulačky a UI napsal agent po schváleném plánu.
 
-- Formula (totalFee, feeForYear) and the test file were written by the AI
-  (me as mentor-reviewer chat); I retyped them myself.
-- Calculator logic and UI by the agent, after an approved plan.
-- Checked by hand: mutation checks (broke the formula, tests went red),
-  375 and 1440 px without horizontal scroll, keyboard path, Vercel on a phone.
-- AI errors: regular space before "Kč" (fixed with nbsp), awkward error text
-  "celé číslo let", copy-cs.md out of sync with content.ts, stale comment.
-- Decision: years limited to 20 to avoid unverified Czech compound forms.
+Ověřil jsem sám:
+
+- Kontroly mutací: rozbil jsem vzorec a testy zčervenaly.
+- Šířky 375 a 1440 px bez vodorovného posunu, ovládání z klávesnice, Vercel na telefonu.
+
+Kde se agent mýlil:
+
+- Běžná mezera před „Kč" (opraveno na pevnou mezeru).
+- Neobratný text chyby „celé číslo let".
+- `copy-cs.md` nebyl v souladu s `content.ts` a zůstal zastaralý komentář.
+
+Moje rozhodnutí, ne AI:
+
+- Roky omezeny na 20, aby nebyly potřeba neověřené české složené tvary.
+
+## Session 05: Supabase schéma a lead formulář
+
+Schéma, RLS a formulář napsal agent po schváleném plánu. Plán jsem nejprve zkontroloval v pomocném chatu (rozhodnutí: `events.variant`, CHECKy, deaktivované tlačítko během odesílání, `utm_content` normalizován na a/b).
+
+`supabase-js` vs. prostý `fetch`: naměřeno +54,84 kB gzip (72,27 → 127,11 kB) pro jeden POST, oproti +1,27 kB s `fetch`. Prahovou hodnotu (30 kB) jsem stanovil před měřením, zvolen `fetch`.
+
+Ověřil jsem sám:
+
+- Testy: celkem 49 prochází. Kontroly mutací: `variant.ts`, `leadForm.ts` (13, jeden ekvivalentní mutant přežil), `lib/` (14).
+- Migrace spuštěna v SQL editoru, testy (a)–(e) v roli `anon` (insert projde, select a špatné hodnoty jsou odmítnuty).
+- Reálná REST volání přes curl (201 při insertu, 401 při selectu), formulář na telefonu proti produkci.
+
+Kde se to pokazilo:
+
+- V `.env` byly hodnoty bez názvů proměnných, takže URL a klíč byly prázdné.
+- Proměnné ve Vercelu byly přidány až po posledním buildu, takže formulář zobrazoval chybový stav až do opětovného nasazení (Redeploy). Vite zapéká proměnné `VITE_` už při buildu.
+
+Kde si agent nebyl jistý:
+
+- Hlavička Authorization s novým formátem publishable klíče (potvrzeno curl testem).
+- Stav úspěchu: formulář zmizí, žádný text až do souhrnné obrazovky v session 07.
