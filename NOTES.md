@@ -191,3 +191,45 @@ Neověřeno:
 - Fallback font jen v Chrome na macOS (Georgia je dostupná); na zařízeních bez Georgie se korekce neuplatní.
 - Dynamická jednotka u let, dokud nenapíšu `yearsUnit`.
 - Telefon a nasazení na Vercelu.
+
+## Session 07: blok brokerů, souhrn po odeslání, hero B
+
+Komponenty (`Brokers`, `Summary`), moduly `summary.ts`, `brokers.ts`, funkce `cumulativeFees` a `pickHeroVariant`, testy k nim a styly napsal agent po schváleném plánu. Nic není commitnuté. Texty jsou slovo od slova z `docs/copy-cs.md`; do docs jsem nejdřív zapsal tři věci (schváleno autorem): změnu "Citujeme" na "Shrnujeme, co brokeři uvádějí na svých stránkách" v hero B, větu pod rozpisem a hlášku o selhání kopírování.
+
+Co se dělalo:
+
+- Hero B: `heroContent.B`, pole `anchor` u obou variant (A `#kalkulacka`, B `#tabulka`), `Hero` čte kotvu z obsahu. `pickHeroVariant(search)` volá `readAdVariant` (jedno místo parsování), tracker beze změny.
+- Stav kalkulačky (text vkladu a let) je v `App`. Při odeslání se použijí poslední platné hodnoty, na začátku 5 000 Kč a 10 let. Scénář zůstává jen v paměti stránky.
+- `feeForYear` zrušena včetně jejích testů. Nahradila ji `cumulativeFees(vklad, ter, roky)` = `totalFee(vklad, ter, 12 * k)` pro k = 1..N. Poslední řádek rozpisu je přesně hodnota z hlavní tabulky souhrnu (test `toBe` a kontrola 907,50 / 1 815 / 5 445 Kč).
+- `buildSummaryText` skládá text pro schránku s běžnými mezerami. Do textu jsem přidal i větu o předpokladech z kalkulačky (`calculatorContent.assumption`), aby vložený text nebyl bez předpokladů.
+- `copyText` nikdy nevyhodí výjimku. Při selhání se ukáže hláška a `<textarea readOnly>` s vybraným textem. Oblast `role="status"` je v DOM od začátku, mění se jen její text. "Zkopírováno." po 4 s zmizí.
+- Blok brokerů: položky jsou pole `text` + `source` (části, některé s odkazem) + datum. Test `brokers.test.ts` čte `docs/copy-cs.md` a porovnává složenou větu s oddílem 4 slovo od slova (nezlomitelné mezery se berou jako mezery).
+
+Převzato z designu (bundle, artboard "Souhrn po odeslání formuláře" a blok brokerů): tokeny, `.sheet`, `.scenario`, `.tbl-box` + `.sumtable`, zavřený `<details>` s šipkou, `.q-list`, tlačítko `btn-secondary` s ikonou, `.quotes` (tenké linky, bez karet a stínů, 2x2 od 60rem), `<cite>` pod větou.
+
+Odchylky od designu:
+
+- `@media` místo container queries.
+- Brokeři bez `<figure>`, `<blockquote>` a velké uvozovky `„` (jsou to parafráze); položky mají stejné odsazení, XTB a Porto bez pomlčky a bez `<cite>`.
+- V `<cite>` jsou odkazy na zdroje (u Degira zvlášť "česká" a "anglická"). V designu odkazy nejsou.
+- `sc-raw-table` z exportu nahrazeno `table`, `thead`, `th scope`. Hlavička sloupců v hlavní tabulce se smí zalamovat (jinak byl na desktopu useknutý sloupec s poplatkem); čísla se nezalamují.
+- Obsah rozpisu v designu není (je jen zavřený `<details>`), tabulku rok × pět fondů jsem navrhl podle `.sumtable`.
+- "Zkopírováno." bez ikony fajfky. Fallback `<textarea>` a jeho styl v designu nejsou. Menší padding buněk tabulky pod 40rem (jinak scroll i u hlavní tabulky na 375 px).
+
+Ověřeno (build s falešným serverem místo Supabase, Chrome headless přes puppeteer-core, požadavky zachyceny na lokálním serveru):
+
+- Bez parametru hero A s kotvou `#kalkulacka`. `?utm_content=b`: hero B, CTA "Zobrazit tabulku", `#tabulka`, události s `variant: 'b'`.
+- Po načtení odešel jen `page_view`. `calc_used` odešel po první změně kalkulačky jednou a po další změně znovu ne. Po odeslání formuláře `form_start`, insert leadu (jen `email` a `consent_text_version`, žádný scénář) a `form_submit`.
+- Neplatný vstup při odeslání: souhrn použil poslední platné hodnoty (7 000 Kč a 9 let); 7 000 Kč, 9 let, TER 0,03 % = 1 030,05 Kč odpovídá ručnímu výpočtu.
+- Fokus po zobrazení souhrnu na H2, formulář zmizel, rozpis zavřený, 10 řádků, poslední řádek se rovná hlavní tabulce, schránka bez nezlomitelných mezer, simulovaný výpadek `clipboard.writeText` ukáže hlášku a označený text.
+- Kotva `#tabulka`: horní okraj tabulky na 0 px a nic ji nezakrývá (sticky prvek v CSS není).
+- Bez horizontálního scrollu stránky na 375, 640 a 1280 px. Brokeři 2 sloupce od 1280 px, souhrn 2 sloupce od 1280 px.
+- Mutační kontroly: `pickHeroVariant` (3 mutanty), `cumulativeFees` (posun roku), `buildSummaryText` (odstraněno nahrazení mezer, index roku), `copyText` (`catch` vrací true), `summaryRows` (součet o 0,01 Kč), blok brokerů (změna slova ve zdroji i v textu, chybějící tečka, přidané uvozovky, chybějící odkaz). Všechny mutanty zachyceny. Testů je 95, lint a build čisté.
+
+Neověřeno:
+
+- Reálná Supabase (použit falešný server, aby se nezapsaly zkušební řádky do živé databáze) a nasazení na Vercelu.
+- Safari/iOS, klávesnice (Tab přes rozpis, `<details>`), screen reader (oznámení "Zkopírováno."), skutečné schránky v jiných prohlížečích než Chrome.
+- Prefix `[PROVOZOVATEL]` a `[právní riziko]` texty zůstávají k posouzení provozovatelem.
+- Věrnost vůči designu je ověřená okem na screenshotech, ne pixelovým porovnáním.
+- `favicon.ico` vrací 404 (už před touto session).
