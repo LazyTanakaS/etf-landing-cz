@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { feeForYear, totalFee } from './fees'
+import { etfs } from './data/etfs'
 
 describe('totalFee', () => {
   it('is 0 for 0 months', () => {
@@ -38,5 +39,15 @@ describe('feeForYear', () => {
       sum += feeForYear(5000, 0.0003, year)
     }
     expect(sum).toBeCloseTo(totalFee(5000, 0.0003, 120))
+  })
+})
+
+describe('illustration', () => {
+  it('gap between the lowest and highest TER in etfs.ts is 4537.50', () => {
+    const ters = etfs.map((etf) => etf.ter)
+    const gap =
+      totalFee(5000, Math.max(...ters), 120) -
+      totalFee(5000, Math.min(...ters), 120)
+    expect(gap).toBeCloseTo(4537.5)
   })
 })
