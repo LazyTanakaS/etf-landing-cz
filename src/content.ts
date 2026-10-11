@@ -36,6 +36,48 @@ export const tableContent = {
     'QQQ je podle stránky emitenta kótován na Nasdaq, ne na NYSE. Poplatek fondu je jen jedna ze složek nákladů. Poplatky brokera, směna měn a daně v něm nejsou.',
 } as const
 
+// docs/copy-cs.md, section 5 (calculator). Labels are the text only, the units
+// stand next to the fields. Error texts and year forms: see the same section.
+// not in the doc yet.
+export const calculatorContent = {
+  heading: 'Kalkulačka poplatku fondu (TER)',
+  subheading: 'Bez zhodnocení a bez poplatků brokera.',
+  fields: {
+    fund: 'Fond',
+    deposit: 'Měsíční vklad',
+    years: 'Doba investování',
+  },
+  units: {
+    deposit: 'Kč',
+    years: 'roky',
+  },
+  yearsForms: {
+    one: 'rok',
+    few: 'roky',
+    many: 'let',
+  },
+  depositError: (min: string, max: string) =>
+    `Zadejte měsíční vklad v celých korunách od ${min} do ${max}.`,
+  yearsError: (min: number, max: number) =>
+    `Zadejte dobu investování v celých letech od ${min} do ${max}.`,
+  result: (years: number, yearsForm: string, fee: string, invested: string) =>
+    `Poplatek fondu za ${years} ${yearsForm}: ${fee}. Z vložených ${invested}. Ilustrace, výpočet.`,
+  belowResult:
+    'Je to jen poplatek fondu. Poplatky brokera, směna měn a daně v něm nejsou. Výsledek není předpověď.',
+  assumption:
+    'Předpoklad výpočtu: vkládáte na začátku každého měsíce. Každý měsíc se z držené hodnoty účtuje jedna dvanáctina ročního poplatku fondu (TER). Zhodnocení 0 %, bez poplatků brokera a směny měn.',
+  // Every value is computed, the text has no fixed number.
+  illustration: (
+    deposit: string,
+    years: number,
+    invested: string,
+    minTer: string,
+    maxTer: string,
+    gap: string,
+  ) =>
+    `Pro představu, ilustrace, výpočet: při ${deposit} měsíčně po dobu ${years} let (vloženo ${invested}), bez zhodnocení a bez poplatků brokera, je rozdíl mezi nejnižším (${minTer}) a nejvyšším (${maxTer}) poplatkem fondu z této tabulky ${gap}.`,
+} as const
+
 // docs/copy-cs.md, section 8 (risk notice). The final wording is for
 // [PROVOZOVATEL] or a lawyer to approve.
 export const riskContent = {

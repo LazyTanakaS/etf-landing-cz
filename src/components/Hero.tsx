@@ -11,8 +11,7 @@ export function Hero({ variant }: HeroProps) {
     <header className="hero">
       <h1>{content.heading}</h1>
       <p className="hero-lead">{content.subheading}</p>
-      {/* TODO: #kalkulacka (the calculator does not exist yet) */}
-      <a className="button" href="#tabulka">
+      <a className="button" href="#kalkulacka">
         {content.cta}
       </a>
       <p className="small">
