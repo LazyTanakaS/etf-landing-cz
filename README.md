@@ -89,13 +89,13 @@ Cesta: klik na reklamu, zobrazení stránky (`page_view`), použití kalkulačky
 | S3: kalkulačka, začátek formuláře | 0,25  | 0,30    | 0,30   |
 | S4: začátek formuláře, odeslání   | 0,40  | 0,50    | 0,55   |
 
-Zobrazení stránky, odeslání = S2 _ S3 _ S4:
+Zobrazení stránky, odeslání = S2 × S3 × S4:
 
-- nízký: 0,20 _ 0,25 _ 0,40 = 2,0 %,
-- střední: 0,30 _ 0,30 _ 0,50 = 4,5 %,
-- vysoký: 0,35 _ 0,30 _ 0,55 = 5,8 % (přesně 5,775 %).
+- nízký: 0,20 × 0,25 × 0,40 = 2,0 %,
+- střední: 0,30 × 0,30 × 0,50 = 4,5 %,
+- vysoký: 0,35 × 0,30 × 0,55 = 5,8 % (přesně 5,775 %).
 
-Klik, odeslání = S1 _ (výše): 0,70 _ 2,0 % = 1,4 %; 0,80 _ 4,5 % = 3,6 %; 0,90 _ 5,775 % = 5,2 %.
+Klik, odeslání = S1 × (výše): 0,70 × 2,0 % = 1,4 %; 0,80 × 4,5 % = 3,6 %; 0,90 × 5,775 % = 5,2 %.
 
 Rozumné rozmezí pro plánování je tedy asi 2 až 6 % ze zobrazení stránky, střed 4,5 %. Rozmezí je široké, protože předpoklady nemají oporu v datech. Navíc se do jmenovatele započítají boti a náhledy odkazů (`docs/funnel.sql`), takže naměřená hodnota bude spíš nižší.
 
@@ -129,9 +129,9 @@ Známá omezení:
 
 Role: plánování a revize plánů probíhaly v samostatném chatu s Claude, implementace v Claude Code (model Sonnet 5.5) po schváleném plánu. Exporty sessions jsou v `ai-log/`, chat v exportech není. Prompty byly anglicky, odpovědi většinou česky, v několika sessions částečně rusky (viz NOTES.md). Podrobný záznam je v `NOTES.md`. Commity a push jsem spouštěl já, nebo je agent spustil na můj výslovný příkaz s přesně zadanými soubory (např. `git add README.md NOTES.md docs src`); `.env` jsem před každým commitem kontroloval ve `git status`. `ai-log/06-tracking.md` obsahuje celý záznam `ai-log/05-supabase-form.md` a `ai-log/03-skeleton.md` obsahuje celý záznam `ai-log/02-copy.md`, protože session nebyly mezi nimi vyčištěny; nejde o duplicity.
 
-Tento README sestavil agent z dokumentů v repu a já jsem ho zkontroloval a upravil.
+Tento soubor sestavil agent z dokumentů v repu a já jsem ho zkontroloval a upravil.
 
-`src/fees.ts` a `src/fees.test.ts` vznikly v commitu 3890df4 (11. 10. 2026, 15:02) před začátkem Session 04. Návrh vzorce a testu vytvořila AI v chatu, který není uložen v `ai-log/`. Já jsem oba soubory přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Blok „illustration“ přibyl v commitu d317ddb. Zadání (`docs/strategy.md`, oddíl 9) původně počítalo s tím, že vzorec a test napíšu sám bez AI; tohle je vědomá odchylka, kterou jsem přiznal.
+`src/fees.ts` a `src/fees.test.ts` vznikly v commitu 3890df4 (11. 10. 2026, 15:02) před začátkem Session 04. Návrh vzorce a testu vytvořila AI v chatu, který není uložen v `ai-log/`. Já jsem oba soubory přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Blok „illustration“ přibyl v commitu d317ddb. Zadání (`docs/strategy.md`, oddíl 9) původně počítalo s tím, že vzorec a test napíšu sám bez AI; tohle je vědomá odchylka, kterou zde uvádím.
 
 Doložené chyby:
 
@@ -141,7 +141,7 @@ Doložené chyby:
 - Konvence vkladu ve vzorci: agent popsal n(n+1)/2 jako "vklad na konci měsíce", ale odpovídá začátku měsíce. Zachyceno při kontrole.
 - TER u QQQ: agent tvrdil 0,20 %, stránka Invesco ukazuje 0,18 %. U dat bez URL a data jsem odpověď odmítl a vyžádal zdroje.
 - Pevné číslo v hero: 4 537,50 Kč agent napsal jako pevný text, požadoval jsem výpočet funkcí kalkulačky z `etfs.ts`.
-- Uniklý klíč: do chatu jsem omylem vložil tajný klíč Supabase (sb*secret*…). Klíč jsem zneplatnil v nastavení API klíčů projektu. Klient používá jen publishable klíč, bezpečnost drží RLS.
+- Uniklý klíč: do chatu jsem omylem vložil tajný klíč Supabase (`sb_secret_…`). Klíč jsem zneplatnil v nastavení API klíčů projektu. Klient používá jen publishable klíč, bezpečnost drží RLS.
 
 Jak jsem výstup kontroloval:
 
