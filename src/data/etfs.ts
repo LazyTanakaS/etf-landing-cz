@@ -1,9 +1,10 @@
-// Values come only from data/etf-sources.md (issuer pages, read on 2026-10-09).
+// Values come only from data/etf-sources.md (issuer pages, read on 2026-10-09;
+// fund names on 2026-10-11).
 // Anything the source does not show is null. Do not fill gaps from memory.
 
 export interface Etf {
   ticker: string
-  // Fund name. Not in data/etf-sources.md, to be copied from the issuer page.
+  // Fund name as written on the issuer page (data/etf-sources.md, "Fund names").
   name: string | null
   // Exchange as shown on the issuer page, null when the page does not show it.
   exchange: string | null
@@ -23,7 +24,7 @@ export interface Etf {
 export const etfs: Etf[] = [
   {
     ticker: 'IVV',
-    name: null, // to be filled from the issuer page
+    name: 'iShares Core S&P 500 ETF',
     exchange: 'NYSE Arca',
     ter: 0.0003,
     terAsOf: null, // source: "no date"
@@ -35,7 +36,7 @@ export const etfs: Etf[] = [
   },
   {
     ticker: 'VOO',
-    name: null, // to be filled from the issuer page
+    name: 'Vanguard S&P 500 ETF',
     exchange: null, // source: "not shown on page"
     ter: 0.0003,
     terAsOf: '2026-04-28',
@@ -47,7 +48,7 @@ export const etfs: Etf[] = [
   },
   {
     ticker: 'VTI',
-    name: null, // to be filled from the issuer page
+    name: 'Vanguard Morningstar Total Stock Market ETF',
     exchange: null, // source: "not shown on page"
     ter: 0.0003,
     terAsOf: '2026-04-28',
@@ -61,7 +62,7 @@ export const etfs: Etf[] = [
   },
   {
     ticker: 'SCHD',
-    name: null, // to be filled from the issuer page
+    name: 'Schwab U.S. Dividend Equity ETF',
     exchange: 'NYSE Arca',
     ter: 0.0006, // source writes 0.060 %
     terAsOf: null, // source: "no date"
@@ -72,7 +73,7 @@ export const etfs: Etf[] = [
   },
   {
     ticker: 'QQQ',
-    name: null, // to be filled from the issuer page
+    name: 'Invesco QQQ ETF',
     exchange: 'Nasdaq', // source: "Nasdaq/NMS (Global Market)"
     ter: 0.0018,
     terAsOf: '2026-10-08',
