@@ -68,7 +68,8 @@ describe('validateLeadForm', () => {
   })
 
   it('has the length limits 5 and 254 inclusive', () => {
-    const at = (length: number) => 'a'.repeat(length - '@example.com'.length) + '@example.com'
+    const at = (length: number) =>
+      'a'.repeat(length - '@example.com'.length) + '@example.com'
     expect(validateLeadForm(withEmail('a@b.c')).kind).toBe('valid')
     expect(validateLeadForm(withEmail('a@bc')).kind).toBe('invalid')
     expect(validateLeadForm(withEmail(at(254))).kind).toBe('valid')
@@ -84,7 +85,9 @@ describe('validateLeadForm', () => {
   })
 
   it('reports both errors at once', () => {
-    expect(validateLeadForm({ email: 'x', consent: false, honeypot: '' })).toEqual({
+    expect(
+      validateLeadForm({ email: 'x', consent: false, honeypot: '' }),
+    ).toEqual({
       kind: 'invalid',
       emailInvalid: true,
       consentMissing: true,
@@ -92,10 +95,14 @@ describe('validateLeadForm', () => {
   })
 
   it('flags a filled honeypot as a bot, even for otherwise invalid input', () => {
-    expect(validateLeadForm({ ...valid, honeypot: 'http://spam.example' })).toEqual({
+    expect(
+      validateLeadForm({ ...valid, honeypot: 'http://spam.example' }),
+    ).toEqual({
       kind: 'bot',
     })
-    expect(validateLeadForm({ email: '', consent: false, honeypot: 'x' })).toEqual({
+    expect(
+      validateLeadForm({ email: '', consent: false, honeypot: 'x' }),
+    ).toEqual({
       kind: 'bot',
     })
   })

@@ -27,19 +27,22 @@ export async function postgrestInsert(
   if (!url || !key) return { ok: false }
 
   try {
-    const response = await fetch(`${url.replace(/\/+$/, '')}/rest/v1/${table}`, {
-      method: 'POST',
-      headers: {
-        apikey: key,
-        Authorization: `Bearer ${key}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=minimal',
+    const response = await fetch(
+      `${url.replace(/\/+$/, '')}/rest/v1/${table}`,
+      {
+        method: 'POST',
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(row),
+        // Without a timeout a hung request would keep the form in "sending"
+        // (button disabled) forever.
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       },
-      body: JSON.stringify(row),
-      // Without a timeout a hung request would keep the form in "sending"
-      // (button disabled) forever.
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    })
+    )
     return { ok: response.ok }
   } catch {
     return { ok: false }

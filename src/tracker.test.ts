@@ -45,12 +45,15 @@ describe('once per page load', () => {
 })
 
 describe('variant', () => {
-  it.each(['a', 'b', null] as const)('passes %s with every event', (variant) => {
-    const { insert, track } = setup({ variant })
-    for (const name of EVENT_NAMES) track(name)
-    expect(insert).toHaveBeenCalledTimes(5)
-    for (const [row] of insert.mock.calls) expect(row.variant).toBe(variant)
-  })
+  it.each(['a', 'b', null] as const)(
+    'passes %s with every event',
+    (variant) => {
+      const { insert, track } = setup({ variant })
+      for (const name of EVENT_NAMES) track(name)
+      expect(insert).toHaveBeenCalledTimes(5)
+      for (const [row] of insert.mock.calls) expect(row.variant).toBe(variant)
+    },
+  )
 })
 
 describe('session id', () => {

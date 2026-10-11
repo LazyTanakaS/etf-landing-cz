@@ -28,7 +28,8 @@ export const etfs: Etf[] = [
     ter: 0.0003,
     terAsOf: null, // source: "no date"
     sourceName: 'iShares',
-    sourceUrl: 'https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf',
+    sourceUrl:
+      'https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf',
     retrievedOn: '2026-10-09',
     terCaveat: null,
   },
@@ -39,7 +40,8 @@ export const etfs: Etf[] = [
     ter: 0.0003,
     terAsOf: '2026-04-28',
     sourceName: 'Vanguard',
-    sourceUrl: 'https://investor.vanguard.com/investment-products/etfs/profile/voo',
+    sourceUrl:
+      'https://investor.vanguard.com/investment-products/etfs/profile/voo',
     retrievedOn: '2026-10-09',
     terCaveat: null,
   },
@@ -50,7 +52,8 @@ export const etfs: Etf[] = [
     ter: 0.0003,
     terAsOf: '2026-04-28',
     sourceName: 'Vanguard',
-    sourceUrl: 'https://investor.vanguard.com/investment-products/etfs/profile/vti',
+    sourceUrl:
+      'https://investor.vanguard.com/investment-products/etfs/profile/vti',
     retrievedOn: '2026-10-09',
     // Fund page shows 0.03 %, a secondary source shows 0.04 %, not resolved.
     // The prospectus was not opened (for any fund; the copy flags only VTI).

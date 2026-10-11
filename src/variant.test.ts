@@ -39,7 +39,9 @@ describe('readAdVariant', () => {
   })
 
   it('ignores other parameters and takes the first utm_content', () => {
-    expect(readAdVariant('?utm_source=x&utm_content=b&utm_medium=cpc')).toBe('b')
+    expect(readAdVariant('?utm_source=x&utm_content=b&utm_medium=cpc')).toBe(
+      'b',
+    )
     expect(readAdVariant('?utm_content=a&utm_content=b')).toBe('a')
     expect(readAdVariant('?utm_content=c&utm_content=a')).toBeNull()
   })

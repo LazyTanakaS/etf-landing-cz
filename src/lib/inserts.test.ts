@@ -66,15 +66,27 @@ describe('insertLead', () => {
 describe('insertEvent', () => {
   it('POSTs to /rest/v1/events with exactly three columns', async () => {
     const sessionId = '00000000-0000-4000-8000-000000000000'
-    await insertEvent({ session_id: sessionId, name: 'page_view', variant: 'a' })
+    await insertEvent({
+      session_id: sessionId,
+      name: 'page_view',
+      variant: 'a',
+    })
     const { url, body } = sent()
     expect(url).toBe(`${URL}/rest/v1/events`)
-    expect(body).toEqual({ session_id: sessionId, name: 'page_view', variant: 'a' })
+    expect(body).toEqual({
+      session_id: sessionId,
+      name: 'page_view',
+      variant: 'a',
+    })
   })
 
   it('sends a missing variant as null, not as an absent key', async () => {
     await insertEvent({ session_id: 's', name: 'cta_click', variant: null })
-    expect(sent().body).toEqual({ session_id: 's', name: 'cta_click', variant: null })
+    expect(sent().body).toEqual({
+      session_id: 's',
+      name: 'cta_click',
+      variant: null,
+    })
     expect(Object.keys(sent().body as object)).toContain('variant')
   })
 
