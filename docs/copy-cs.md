@@ -37,7 +37,7 @@ Slova "kalkulačka" a "kótován" se nemění.
 - H1: Dá se americké ETF koupit u vašeho brokera?
 - Podnadpis: Záleží na brokerovi. Níže je pět amerických ETF v jedné tabulce a to, co o nich brokeři uvádějí na svých stránkách.
 - CTA: Zobrazit tabulku
-- Drobný text: Citujeme brokery z jejich stránek, načteno 9. 10. 2026. Stav u konkrétního fondu si ověřte u svého brokera před nákupem. Informativní obsah, nejde o investiční doporučení. Investice nesou riziko ztráty. [Poučení o rizicích]
+- Drobný text: Shrnujeme, co brokeři uvádějí na svých stránkách, načteno 9. 10. 2026. Stav u konkrétního fondu si ověřte u svého brokera před nákupem. Informativní obsah, nejde o investiční doporučení. Investice nesou riziko ztráty. [Poučení o rizicích]
 - Proč: odpověď "záleží" je v první větě, bez čekání na scroll. Podnadpis nepočítá ani nejmenuje brokery, takže slibuje jen to, co blok pod tabulkou obsahuje.
 - [právní riziko]: "u vašeho brokera" při částečném pokrytí brokerů (viz oddíl 4).
 
@@ -122,6 +122,8 @@ Jak se hodnoty počítají:
 - Řádek scénáře: Měsíční vklad {A} Kč, doba {N} let, vloženo celkem {B} Kč.
 - Tvar roku v "doba {N} let" a v "poplatek fondu za {N} let": stejná pravidla jako u kalkulačky (oddíl 5).
 - Tabulka: pět fondů, poplatek fondu (TER), poplatek fondu za {N} let. Pod ní: Poplatek fondu po jednotlivých letech (rozpis).
+- Pod tabulkou rozpisu po letech (session 07, návrh, schválí autor; schváleno autorem): Součet od začátku investování do konce daného roku.
+- Rozpis po letech je zavřený `<details>`, uvnitř tabulka rok × pět fondů. Řádek pro rok k je poplatek fondu po k letech, poslední řádek se rovná hodnotě v hlavní tabulce souhrnu.
 - Pod tabulkou: Ilustrace, výpočet, při předpokladech uvedených u kalkulačky. Není to investiční doporučení.
 - Otázky pro brokera:
   1. Mohu u vás jako neprofesionální zákazník koupit toto ETF (burzovní symbol)?
@@ -131,6 +133,7 @@ Jak se hodnoty počítají:
   5. Poskytujete k nákupu poradenství, nebo jen provedete můj pokyn?
 - Tlačítko: Zkopírovat souhrn jako text. Po kliknutí: "Zkopírováno."
 - Závěr: Souhrn vám e-mailem neposíláme, zůstane jen na této obrazovce. Zkopírujte si ho.
+- Hláška při selhání kopírování (session 07, návrh, schválí autor; schváleno autorem): Kopírování se nepodařilo. Text si označte a zkopírujte ručně. Pod hláškou zůstane text souhrnu k označení.
 - Proč: souhrn dělá jen to, co jde spočítat v prohlížeči. Otázky pro brokera jsou otázky, ne tvrzení, takže nic nevymýšlejí a návštěvník s nimi může jít k libovolnému brokerovi.
 - [právní riziko]: otázka 2 (dotýká se KID a ČNB bez našeho stanoviska) a otázka 5 (hranice k poradenství).
 
