@@ -11,12 +11,12 @@ Slova "kalkulačka" a "kótován" se nemění.
 
 ## 1. Reklamy
 
-| | Reklama A (poplatky) | Reklama B (dostupnost) |
-|---|---|---|
-| Nadpis (do 40 znaků) | Kolik činí poplatek fondu za 10 let? (36) | Dá se americké ETF koupit u brokera? (36) |
+|                            | Reklama A (poplatky)                                                                                        | Reklama B (dostupnost)                                                                                        |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Nadpis (do 40 znaků)       | Kolik činí poplatek fondu za 10 let? (36)                                                                   | Dá se americké ETF koupit u brokera? (36)                                                                     |
 | Hlavní text (do 125 znaků) | Pět amerických ETF, poplatek fondu (TER) u každého a výpočet na 10 let. Každé číslo má zdroj a datum. (101) | Záleží na brokerovi. Ukážeme, co brokeři uvádějí na svých stránkách, a na co se zeptat u svého brokera. (103) |
-| CTA | Spočítat poplatek (tlačítko platformy: "Zjistit více") | Zobrazit tabulku (tlačítko platformy: "Zjistit více") |
-| Řádek s upozorněním (81) | Investice nesou riziko ztráty. Informativní obsah, nejde o investiční doporučení. | stejný |
+| CTA                        | Spočítat poplatek (tlačítko platformy: "Zjistit více")                                                      | Zobrazit tabulku (tlačítko platformy: "Zjistit více")                                                         |
+| Řádek s upozorněním (81)   | Investice nesou riziko ztráty. Informativní obsah, nejde o investiční doporučení.                           | stejný                                                                                                        |
 
 - Proč A: otázka s horizontem z oddílu 7 strategie. V reklamě není žádné číslo s předpoklady, protože se nevejdou do 125 znaků. "Činí" místo "stojí", protože "stojí fond" se dá číst jako cena fondu a kalkulačka neříká "kolik vás to stojí celkem".
 - Proč B: otázka bez tvrzení o nedostupnosti, protože Fio uvádí opak. "Záleží na brokerovi" je věta z tabulky, takže reklama a stránka říkají totéž. Reklama neuvádí počet ani jména brokerů, aby neslibovala víc ani míň, než blok pod tabulkou obsahuje.
@@ -72,8 +72,13 @@ Slova "kalkulačka" a "kótován" se nemění.
 
 - Nadpis: Kalkulačka poplatku fondu (TER)
 - Podnadpis: Bez zhodnocení a bez poplatků brokera.
-- Pole: Fond (výběr z pěti) | Měsíční vklad, Kč (výchozí 5 000) | Doba investování, roky (výchozí 10)
-- Výsledek: Poplatek fondu za {n} let: {X} Kč. Z vložených {Y} Kč. Ilustrace, výpočet.
+- Pole: Fond (výběr z pěti, výchozí je první řádek tabulky) | Měsíční vklad (jednotka Kč vedle pole, výchozí 5 000) | Doba investování (jednotka roky vedle pole, výchozí 10)
+- Výsledek: Poplatek fondu za {n} {rok / roky / let}: {X} Kč. Z vložených {Y} Kč. Ilustrace, výpočet.
+- Tvar roku: 1 rok, 2 až 4 roky, 5 až 20 let. [návrh, schválí autor]
+- Meze a vstup: vklad 100 až 1 000 000 Kč, doba 1 až 20 let, jen celá čísla. Mezery (i nezlomitelné) se ignorují, takže "5 000" je platný vstup. Chyba se ukáže po opuštění pole a potom průběžně. Při neplatném vstupu se výsledek nezobrazí.
+- Chyba u vkladu: Zadejte měsíční vklad v celých korunách od 100 do 1 000 000.
+- Chyba u doby: Zadejte dobu investování v celých letech od 1 do 20.
+- Proč mez 20 let: do 20 stačí tři tvary (rok, roky, let). U složených čísel (21 až 24, 31 až 34 a dál) nemám tvar ověřený, proto je mez 20.
 - Pod výsledkem: Je to jen poplatek fondu. Poplatky brokera, směna měn a daně v něm nejsou. Výsledek není předpověď.
 - Věta s předpokladem: Předpoklad výpočtu: vkládáte na začátku každého měsíce. Každý měsíc se z držené hodnoty účtuje jedna dvanáctina ročního poplatku fondu (TER). Zhodnocení 0 %, bez poplatků brokera a směny měn.
 - Proč: předpoklad stojí hned u výsledku a odpovídá vzorci z přílohy A strategie. Výchozí hodnoty vycházejí ze zdrojového vektoru a v textu jsou označené jako ilustrace.
@@ -87,12 +92,12 @@ Slova "kalkulačka" a "kótován" se nemění.
 
 Jak se hodnoty počítají:
 
-- `minTER` a `maxTER`: nejnižší a nejvyšší TER v tabulce, z hodnot v `etfs.ts`. Ten soubor v repozitáři zatím neexistuje, vzniká s tabulkou.
-- `vklad` = 5 000 Kč, doba = 120 měsíců (10 let). Řádek je nezávislý na hodnotách zadaných do kalkulačky.
+- `minTER` a `maxTER`: nejnižší a nejvyšší TER v tabulce, z hodnot v `src/data/etfs.ts`.
+- `vklad` = 5 000 Kč, doba = 120 měsíců (10 let). Řádek je nezávislý na hodnotách zadaných do kalkulačky. Doba je pevně 10 let, proto je v textu vždy "let".
 - `vloženo` = `vklad * 120`.
 - `rozdíl` = výstup stejné funkce poplatku, kterou používá kalkulačka, pro `maxTER` minus výstup pro `minTER`. Žádná druhá implementace vzorce.
 - Vzorec a konvence vkladu: příloha A v `docs/strategy.md` (`vklad * (TER / 12) * n * (n + 1) / 2`, vklad na začátku měsíce).
-- Kontrola proti příloze A: se současnými daty (0,03 % a 0,18 %) vychází `5 445 - 907,50 = 4 537,50` Kč a vloženo 600 000 Kč. Tato hodnota patří do unit testu, ne do šablony textu. Změní-li se data v `etfs.ts`, změní se i číslo ve stránce.
+- Kontrola proti příloze A: se současnými daty (0,03 % a 0,18 %) vychází `5 445 - 907,50 = 4 537,50` Kč a vloženo 600 000 Kč. Tato hodnota je v unit testu (`src/calculator.test.ts`), ne v šabloně textu.
 
 - Proč: číslo má vlastní předpoklady přímo vedle sebe, takže se nemůže plést s výsledkem pro uživatelův scénář. Počítá se ze stejných dat a stejné funkce jako zbytek stránky, takže se nemůže rozejít s tabulkou.
 - [právní riziko]: je to srovnání dvou konkrétních fondů, i když nejsou pojmenované. Posoudí [PROVOZOVATEL].
@@ -113,6 +118,7 @@ Jak se hodnoty počítají:
 
 - Nadpis: Váš souhrn
 - Řádek scénáře: Měsíční vklad {A} Kč, doba {N} let, vloženo celkem {B} Kč.
+- Tvar roku v "doba {N} let" a v "poplatek fondu za {N} let": stejná pravidla jako u kalkulačky (oddíl 5).
 - Tabulka: pět fondů, poplatek fondu (TER), poplatek fondu za {N} let. Pod ní: Poplatek fondu po jednotlivých letech (rozpis).
 - Pod tabulkou: Ilustrace, výpočet, při předpokladech uvedených u kalkulačky. Není to investiční doporučení.
 - Otázky pro brokera:
@@ -168,17 +174,17 @@ Proč jedno pořadí: A/B test měří slib v reklamě a hero, ne dvě různé s
 
 Mohou znít jako překlad nebo rusismus či slovakismus. Doporučuji dát celý text přečíst rodilému mluvčímu.
 
-| Fráze | Riziko | Alternativa |
-|---|---|---|
-| načteno 9. 10. 2026 | kalk z "retrieved/loaded" | zjištěno / zkontrolováno / stav k 9. 10. 2026 |
-| neprofesionální zákazník | správně česky; hrozí zpětný kalk "retailový klient" | zůstat u "neprofesionální zákazník" |
-| doba investování | v pořádku; "horizont" zní ruskeji | investiční horizont |
-| činí poplatek | trochu úřední | stojí poplatek (ale viz oddíl 1: "stojí fond") |
-| souhrn | v pořádku | shrnutí |
-| Dá se koupit | hovorové, v reklamě přirozené | Lze koupit |
-| nejde o investiční doporučení | v pořádku (rusismus "ne doporučení" se nepoužívá) | |
-| Ukážeme (reklama B) | v pořádku | Najdete |
-| záleží, dá se | společné pro češtinu i slovenštinu | |
+| Fráze                         | Riziko                                              | Alternativa                                    |
+| ----------------------------- | --------------------------------------------------- | ---------------------------------------------- |
+| načteno 9. 10. 2026           | kalk z "retrieved/loaded"                           | zjištěno / zkontrolováno / stav k 9. 10. 2026  |
+| neprofesionální zákazník      | správně česky; hrozí zpětný kalk "retailový klient" | zůstat u "neprofesionální zákazník"            |
+| doba investování              | v pořádku; "horizont" zní ruskeji                   | investiční horizont                            |
+| činí poplatek                 | trochu úřední                                       | stojí poplatek (ale viz oddíl 1: "stojí fond") |
+| souhrn                        | v pořádku                                           | shrnutí                                        |
+| Dá se koupit                  | hovorové, v reklamě přirozené                       | Lze koupit                                     |
+| nejde o investiční doporučení | v pořádku (rusismus "ne doporučení" se nepoužívá)   |                                                |
+| Ukážeme (reklama B)           | v pořádku                                           | Najdete                                        |
+| záleží, dá se                 | společné pro češtinu i slovenštinu                  |                                                |
 
 ## 11. Návrh termínů do glosáře
 
