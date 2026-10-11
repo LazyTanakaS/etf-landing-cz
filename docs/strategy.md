@@ -112,6 +112,8 @@ Hrubý odhad hodin (není měření): data a ověření 2-3 (část je hotová v
 - Vzorec kalkulačky a jeho unit test píše autor podle specifikace v příloze A, AI je reviduje.
 - README popíše: instrukce, kontrolu výstupu, kde se AI mýlila (například konvence vkladu ve vzorci), a exporty konverzací v `ai-log/`.
 
+Odchylka: AI navrhla první verzi fees.ts a fees.test.ts, autor je přepsal ručně (viz NOTES.md, Session 04).
+
 ## 10. Otevřená rizika
 
 - Dostupnost per ticker není ověřena u žádného brokera; premisa magnetu platí jen částečně.

@@ -14,7 +14,7 @@ Na mně zůstalo: výběr cílové skupiny a lead magnetu, ověření údajů p�
 
 ## Session 01-strategy (9. 10. 2026)
 
-Model: Sonnet 5.5, High effort. Režim: plan mode, žádné soubory bez mého schválení. Commity a push jsem dělal sám, agent necommitoval.
+Model: Sonnet 5.5, High effort. Režim: plan mode, žádné soubory bez mého schválení. Commity a push jsem spouštěl já, nebo je agent spustil na můj výslovný příkaz s přesně zadanými soubory (např. `git add README.md NOTES.md docs src`); `.env` jsem před každým commitem kontroloval ve `git status`.
 
 Zadání: kritika mého návrhu z Miro (dostupnost amerických ETF pro české drobné investory, příklad poplatků, zamčená tabulka, formulace, rozsah), dvě alternativy lead magnetu, potom návrh strategie.
 
@@ -40,7 +40,7 @@ Moje rozhodnutí, ne AI:
 
 ## Session 02-copy (9. 10. 2026)
 
-Model: Sonnet 5.5, high effort. Režim: plan mode, texty zapsány až po mém „zapiš". Commity a push jsem dělal sám, agent necommitoval.
+Model: Sonnet 5.5, high effort. Režim: plan mode, texty zapsány až po mém „zapiš". Commity a push jsem spouštěl já, nebo je agent spustil na můj výslovný příkaz s přesně zadanými soubory (např. `git add README.md NOTES.md docs src`); `.env` jsem před každým commitem kontroloval ve `git status`.
 
 Zadání: české texty reklam A a B, hero obou variant, tabulka, blok „Co uvádějí brokeři", kalkulačka, formulář, souhrn po odeslání, poučení o rizicích, pořadí sekcí a seznam frází k jazykové kontrole.
 
@@ -69,7 +69,7 @@ Claude Code v několika sessions odpovídal částečně rusky (můj pracovní j
 
 ## Session 03-skeleton (9. 10. 2026)
 
-Model: Sonnet 5.5, medium effort. Režim: plan mode, soubory zapsány až po mém „zapiš". Commity a push jsem dělal sám, agent necommitoval. Na Vercel jsem nasadil sám v dashboardu.
+Model: Sonnet 5.5, medium effort. Režim: plan mode, soubory zapsány až po mém „zapiš". Commity a push jsem spouštěl já, nebo je agent spustil na můj výslovný příkaz s přesně zadanými soubory (např. `git add README.md NOTES.md docs src`); `.env` jsem před každým commitem kontroloval ve `git status`. Na Vercel jsem nasadil sám v dashboardu.
 
 `ai-log/03-skeleton.md` obsahuje na začátku i záznam session 02 (mezi sessions jsem nepoužil `/clear`). Session 03 začíná promptem „Cíl této session: kostra aplikace a první nasazení".
 
@@ -96,7 +96,7 @@ Moje rozhodnutí, ne AI:
 
 ## Session 04
 
-Vzorec (`totalFee`, `feeForYear`) a unit test napsal AI (podle přílohy A), já jsem je přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Původně jsem je chtěl psát sám (viz strategy.md, oddíl 9); rozhodl jsem se jinak. Logiku kalkulačky a UI napsal agent po schváleném plánu.
+`src/fees.ts` a `src/fees.test.ts` vznikly v commitu 3890df4 (11. 10. 2026, 15:02) před začátkem Session 04. Návrh vzorce a testu vytvořila AI v chatu, který není uložen v `ai-log/`. Já jsem oba soubory přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Blok „illustration“ přibyl v commitu d317ddb. Zadání (`docs/strategy.md`, oddíl 9) původně počítalo s tím, že vzorec a test napíšu sám bez AI; tohle je vědomá odchylka, kterou jsem přiznal. Logiku kalkulačky a UI napsal agent po schváleném plánu.
 
 Ověřil jsem sám:
 

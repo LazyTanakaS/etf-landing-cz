@@ -127,11 +127,11 @@ Známá omezení:
 
 ## 8. Jak byla použita AI a kde se mýlila
 
-Role: plánování a revize plánů probíhaly v samostatném chatu s Claude, implementace v Claude Code (model Sonnet 5.5) po schváleném plánu. Exporty sessions jsou v `ai-log/`, chat v exportech není. Prompty byly anglicky, odpovědi většinou česky, v několika sessions částečně rusky (viz NOTES.md). Podrobný záznam je v `NOTES.md`. Commity a push jsem dělal sám.
+Role: plánování a revize plánů probíhaly v samostatném chatu s Claude, implementace v Claude Code (model Sonnet 5.5) po schváleném plánu. Exporty sessions jsou v `ai-log/`, chat v exportech není. Prompty byly anglicky, odpovědi většinou česky, v několika sessions částečně rusky (viz NOTES.md). Podrobný záznam je v `NOTES.md`. Commity a push jsem spouštěl já, nebo je agent spustil na můj výslovný příkaz s přesně zadanými soubory (např. `git add README.md NOTES.md docs src`); `.env` jsem před každým commitem kontroloval ve `git status`. `ai-log/06-tracking.md` obsahuje celý záznam `ai-log/05-supabase-form.md` a `ai-log/03-skeleton.md` obsahuje celý záznam `ai-log/02-copy.md`, protože session nebyly mezi nimi vyčištěny; nejde o duplicity.
 
 Tento README sestavil agent z dokumentů v repu a já jsem ho zkontroloval a upravil.
 
-Odchylka od plánu: `docs/strategy.md`, oddíl 9, předpokládal, že vzorec kalkulačky a jeho test napíšu já. Podle `NOTES.md` (Session 04) je napsala AI a já jsem je přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Je to vědomá odchylka od oddílu 9.
+`src/fees.ts` a `src/fees.test.ts` vznikly v commitu 3890df4 (11. 10. 2026, 15:02) před začátkem Session 04. Návrh vzorce a testu vytvořila AI v chatu, který není uložen v `ai-log/`. Já jsem oba soubory přepsal ručně a ověřil testy s hodnotami, které jsem spočítal sám. Blok „illustration“ přibyl v commitu d317ddb. Zadání (`docs/strategy.md`, oddíl 9) původně počítalo s tím, že vzorec a test napíšu sám bez AI; tohle je vědomá odchylka, kterou jsem přiznal.
 
 Doložené chyby:
 
