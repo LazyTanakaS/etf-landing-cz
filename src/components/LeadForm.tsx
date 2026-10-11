@@ -1,11 +1,22 @@
 import { useRef, useState, type SubmitEvent } from 'react'
 import { leadFormContent } from '../content'
-import { submitLead } from '../leadForm'
+import { submitLead, type LeadRow } from '../leadForm'
 import { insertLead } from '../lib/inserts'
+import type { InsertResult } from '../lib/supabase'
+import { track } from '../track'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
 const noErrors = { emailInvalid: false, consentMissing: false }
+
+// Saves the lead and reports form_submit only when it was really saved. The
+// honeypot branch of submitLead never calls insert, so a bot sends no event.
+// The result goes back unchanged; track() is fire and forget and not awaited.
+async function insertLeadAndTrack(lead: LeadRow): Promise<InsertResult> {
+  const result = await insertLead(lead)
+  if (result.ok) track('form_submit')
+  return result
+}
 
 interface LeadFormProps {
   // The form shows no success text of its own. The parent decides what the
@@ -31,7 +42,10 @@ export function LeadForm({ onSuccess }: LeadFormProps) {
     inFlight.current = true
     setStatus('sending')
 
-    const result = await submitLead({ email, consent, honeypot }, insertLead)
+    const result = await submitLead(
+      { email, consent, honeypot },
+      insertLeadAndTrack,
+    )
     inFlight.current = false
 
     if (result.status === 'success') {
@@ -80,6 +94,7 @@ export function LeadForm({ onSuccess }: LeadFormProps) {
             placeholder={text.emailPlaceholder}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            onFocus={() => track('form_start')}
             aria-invalid={errors.emailInvalid}
             aria-describedby={
               errors.emailInvalid ? 'formular-email-chyba' : undefined

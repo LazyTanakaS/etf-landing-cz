@@ -1,4 +1,5 @@
 import { heroContent, type HeroVariant } from '../content'
+import { track } from '../track'
 
 interface HeroProps {
   variant: HeroVariant
@@ -11,7 +12,11 @@ export function Hero({ variant }: HeroProps) {
     <header className="hero">
       <h1>{content.heading}</h1>
       <p className="hero-lead">{content.subheading}</p>
-      <a className="button" href="#kalkulacka">
+      <a
+        className="button"
+        href="#kalkulacka"
+        onClick={() => track('cta_click')}
+      >
         {content.cta}
       </a>
       <p className="small">

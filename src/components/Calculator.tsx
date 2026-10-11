@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   illustration,
   limits,
@@ -10,6 +10,7 @@ import {
 import { calculatorContent } from '../content'
 import type { Etf } from '../data/etfs'
 import { formatCzk, formatNumber, formatTer } from '../format'
+import { track } from '../track'
 
 interface CalculatorProps {
   items: readonly Etf[]
@@ -23,6 +24,8 @@ export function Calculator({ items }: CalculatorProps) {
   // An error shows after the field is left, and stays live from then on.
   const [depositTouched, setDepositTouched] = useState(false)
   const [yearsTouched, setYearsTouched] = useState(false)
+  // Set by the first change of the fund, the deposit or the years.
+  const [interacted, setInteracted] = useState(false)
 
   const etf = items.find((item) => item.ticker === ticker) ?? items[0]
   const deposit = parseDeposit(depositText)
@@ -30,6 +33,14 @@ export function Calculator({ items }: CalculatorProps) {
   const result =
     deposit !== null && years !== null ? scenario(deposit, etf.ter, years) : null
   const gap = illustration(items)
+
+  // The defaults (5 000 Kč, 10 years) already show a valid result on load, so
+  // "a valid result is on screen" alone would fire for every visitor. It counts
+  // as use only after the visitor changed something. The tracker sends it once.
+  const hasResult = result !== null
+  useEffect(() => {
+    if (interacted && hasResult) track('calc_used')
+  }, [interacted, hasResult])
 
   const showDepositError = depositTouched && deposit === null
   const showYearsError = yearsTouched && years === null
@@ -45,7 +56,10 @@ export function Calculator({ items }: CalculatorProps) {
           <select
             id="kalkulacka-fond"
             value={ticker}
-            onChange={(event) => setTicker(event.target.value)}
+            onChange={(event) => {
+              setTicker(event.target.value)
+              setInteracted(true)
+            }}
           >
             {items.map((item) => (
               <option key={item.ticker} value={item.ticker}>
@@ -64,7 +78,10 @@ export function Calculator({ items }: CalculatorProps) {
               inputMode="numeric"
               autoComplete="off"
               value={depositText}
-              onChange={(event) => setDepositText(event.target.value)}
+              onChange={(event) => {
+                setDepositText(event.target.value)
+                setInteracted(true)
+              }}
               onBlur={() => setDepositTouched(true)}
               aria-invalid={showDepositError}
               aria-describedby={`kalkulacka-vklad-jednotka${showDepositError ? ' kalkulacka-vklad-chyba' : ''}`}
@@ -90,7 +107,10 @@ export function Calculator({ items }: CalculatorProps) {
               inputMode="numeric"
               autoComplete="off"
               value={yearsText}
-              onChange={(event) => setYearsText(event.target.value)}
+              onChange={(event) => {
+                setYearsText(event.target.value)
+                setInteracted(true)
+              }}
               onBlur={() => setYearsTouched(true)}
               aria-invalid={showYearsError}
               aria-describedby={`kalkulacka-roky-jednotka${showYearsError ? ' kalkulacka-roky-chyba' : ''}`}

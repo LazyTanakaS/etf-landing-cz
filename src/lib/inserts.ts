@@ -21,7 +21,7 @@ export interface EventRow {
 
 // Each function picks its columns by hand. The database grants INSERT to anon
 // only on these columns, so a stray extra property must never reach the wire.
-// No tracking calls yet (session 06): nothing in the app calls insertEvent.
+// Components do not call this directly: track() in src/track.ts does.
 export function insertEvent(event: EventRow): Promise<InsertResult> {
   return postgrestInsert('events', {
     session_id: event.session_id,
