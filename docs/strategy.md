@@ -30,7 +30,7 @@ Dostupnost a brokeři:
 
 - Stránka cituje brokera jeho vlastními slovy a s datem načtení ("Broker na svých stránkách uvádí..."), nikdy jako vlastní fakt.
 - Doložené: Interactive Brokers (znalostní báze, obecně blokováno pro retail z EHP a UK, bez tickerů) a Fio (klienti mohou obchodovat americká ETF bez omezení, ale bez poradenství a aktivní nabídky; datum článku doplní autor).
-- Degiro, XTB, Portu: [neověřeno], bez tvrzení.
+- Degiro, XTB: [neověřeno], bez tvrzení. Portu: v katalogu nenalezeno pět fondů (ruční kontrola autora, 11. 10. 2026); stránka netvrdí nic o amerických ETF obecně.
 - Stav per ticker u žádného brokera není ověřen.
 - ČNB: obecný princip je v [Q&A B02](https://www.cnb.cz/en/faq/Questions-and-answers-on-the-PRIIPs-KID/) (aktualizováno 22. 10. 2018): pro execution-only na podnět investora se povinnost KID podle čl. 13(1) nevztahuje. Americká ETF nezmiňuje. Stanovisko ČNB k americkým ETF je [neověřeno]. Nepsat "ČNB povoluje".
 
@@ -115,7 +115,7 @@ Hrubý odhad hodin (není měření): data a ověření 2-3 (část je hotová v
 ## 10. Otevřená rizika
 
 - Dostupnost per ticker není ověřena u žádného brokera; premisa magnetu platí jen částečně.
-- Stránky brokerů jsou bez data, uvádí se datum načtení. Degiro, XTB a Portu jsou [neověřeno].
+- Stránky brokerů jsou bez data, uvádí se datum načtení. Degiro a XTB jsou [neověřeno]. U Portu je v katalogu nenalezeno pět fondů (ruční kontrola autora, 11. 10. 2026), obecné tvrzení k americkým ETF stránka nemá.
 - Stanovisko ČNB k americkým ETF je [neověřeno]; Fio ho uvádí bez primárního zdroje.
 - VTI: TER 0,03 % dle stránky fondu k 9. 10. 2026, prospekt neověřen.
 - Burza u VOO a VTI je v tabulce "neuvedeno", stránka emitenta ji neuvádí.

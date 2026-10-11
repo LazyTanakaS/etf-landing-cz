@@ -67,7 +67,7 @@ Co je `[neověřeno]`:
 
 - VTI: stránka fondu ukazuje TER 0,03 %, sekundární zdroj 0,04 %, rozpor není vyřešen a prospekt nebyl otevřen. Stránka to u VTI uvádí.
 - Stanovisko ČNB k americkým ETF.
-- Degiro (česká stránka americká ETF nezmiňuje, anglická ano), XTB a Portu: u XTB a Portu jsme na jejich stránkách nenašli tvrzení k americkým ETF, stránka to tak říká.
+- Degiro (česká stránka americká ETF nezmiňuje, anglická ano), XTB a Portu: u XTB jsme na jejich stránkách nenašli tvrzení k americkým ETF. U Portu v katalogu nebylo 11. 10. 2026 nalezeno pět fondů (ruční kontrola autora); stránka Portu netvrdí nic o amerických ETF obecně. Stránka to tak říká.
 - Stav u konkrétního tickeru není ověřen u žádného brokera.
 - Burza u VOO a VTI: stránka emitenta ji neuvádí, tabulka píše "neuvedeno".
 - Doklad pro Fio je článek z 19. 1. 2022, stav se mohl změnit; stránka to uvádí.

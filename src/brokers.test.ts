@@ -35,9 +35,17 @@ describe('broker block', () => {
     })
   })
 
-  it('has no quotation marks around the paraphrases', () => {
+  // Exact quotations of a page's own wording that may keep their quotation
+  // marks. Everything else must be free of them.
+  const allowedQuotes = ['„S čím můžete obchodovat“']
+
+  it('has no quotation marks around the paraphrases, except allowed quotes', () => {
     for (const item of brokersContent.items) {
-      expect(brokerSentence(item)).not.toMatch(/["„“”]/)
+      const stripped = allowedQuotes.reduce(
+        (text, quote) => text.split(quote).join(''),
+        brokerSentence(item),
+      )
+      expect(stripped).not.toMatch(/["„“”]/)
     }
   })
 

@@ -113,7 +113,7 @@ export const brokersContent = {
     },
     {
       id: 'xtb-portu',
-      text: 'U XTB a Portu jsme k 9.\u00A010.\u00A02026 na jejich vlastních stránkách nenašli tvrzení k americkým ETF. Zeptejte se přímo u nich.',
+      text: 'U XTB jsme k 9.\u00A010.\u00A02026 na jejich vlastních stránkách nenašli tvrzení k americkým ETF. V katalogu Portu (část „S čím můžete obchodovat“) jsme 11.\u00A010.\u00A02026 nenašli ani jeden z těchto pěti fondů. Podle stránek Portu se seznam rozšiřuje na základě požadavků investorů. Zeptejte se přímo u nich.',
       source: null,
       retrievedOn: null,
     },
