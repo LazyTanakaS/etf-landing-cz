@@ -77,7 +77,7 @@ Kvíz: ne.
 - CHECK (variant IS NULL OR variant IN ('a','b'))
 - `leads`: id, email, consent_at, consent_text_version, created_at. `session_id` se do `leads` nezapisuje.
 - [doporučení] Tabulky nepropojit. Důvod: události zůstanou anonymní. Kompromis: konverzi nelze přiřadit relaci, jen agregovaně.
-- Session id je náhodné a žije v `sessionStorage`.
+- Session id je náhodné a žije jen v paměti stránky (po obnovení stránky vznikne nové).
 - RLS: anon smí INSERT, žádný SELECT. Insert bez čtení zpět (return=minimal).
 - Bez UNIQUE na e-mailu: chyba by prozradila, že e-mail už existuje. Deduplikace mimo aplikaci.
 - Ochrana před boty: honeypot a CHECK omezení délky e-mailu a seznam povolených názvů událostí. Rate limit bez Edge Functions nejde.
@@ -120,7 +120,7 @@ Hrubý odhad hodin (není měření): data a ověření 2-3 (část je hotová v
 - VTI: TER 0,03 % dle stránky fondu k 9. 10. 2026, prospekt neověřen.
 - Burza u VOO a VTI je v tabulce "neuvedeno", stránka emitenta ji neuvádí.
 - Účel zpracování e-mailu bez slibu doručení: [PROVOZOVATEL].
-- `sessionStorage` id může vyžadovat souhlas i bez cookies (zákon 127/2005) [neověřeno]; posoudí [PROVOZOVATEL].
+- Kód stránky nic neukládá do prohlížeče. Služba Supabase může nastavit technický cookie proti botům (Cloudflare `__cf_bm`). Právní posouzení podle zákona 127/2005 je [neověřeno], posoudí [PROVOZOVATEL].
 - Právní kvalifikace formulací [neověřeno]; posoudí [PROVOZOVATEL] nebo právník.
 - Anon INSERT je otevřený botům; ochrana jen částečná.
 - Očekávaná konverze je odhad s odůvodněním v README. Ne zjištěná hodnota.

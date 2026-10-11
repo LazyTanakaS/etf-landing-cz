@@ -47,7 +47,7 @@ Slova "kalkulačka" a "kótován" se nemění.
 - Popisek řazení: Řazeno podle poplatku fondu (TER), od nejnižšího. Při stejném poplatku abecedně podle symbolu.
 - Pořadí řádků podle dat: IVV, VOO, VTI (0,03 %), SCHD (0,06 %), QQQ (0,18 %).
 - Sloupce (4): Burzovní symbol a název | Burza (podle stránky emitenta) | Poplatek fondu (TER) | Dostupnost
-- Název fondu: `[název z webu emitenta]`. V `data/*.md` nejsou, nedoplňovat z paměti.
+- Název fondu: přesné znění ze stránky emitenta, načteno 11. 10. 2026 (`data/etf-sources.md`, oddíl Fund names): IVV iShares Core S&P 500 ETF, VOO Vanguard S&P 500 ETF, VTI Vanguard Morningstar Total Stock Market ETF, SCHD Schwab U.S. Dividend Equity ETF, QQQ Invesco QQQ ETF. Nedoplňovat z paměti.
 - Buňka burza: NYSE Arca (IVV, SCHD) / Nasdaq (QQQ) / "neuvedeno" (VOO, VTI)
 - Buňka TER (příklad): 0,03 %, k datu 28. 4. 2026. Zdroj: Vanguard, načteno 9. 10. 2026.
   - IVV a SCHD: "datum na stránce neuvedeno".
@@ -158,7 +158,7 @@ Musí posoudit [PROVOZOVATEL]:
 - identifikace provozovatele a jeho regulatorní status,
 - věta o daních,
 - umístění bloku na stránce,
-- souhlas a `sessionStorage` (strategie, oddíl 10: [neověřeno]).
+- souhlas a měření (technický cookie služby Supabase) (strategie, oddíl 10: [neověřeno]).
 
 Proč: jen obecná a ověřitelná tvrzení, žádná čísla ani sliby. Nic o ČNB, o daních jen odkaz na situaci čtenáře.
 
