@@ -15,6 +15,7 @@ Hodnoty fondů jsou jen v `data/etf-sources.md`, tvrzení brokerů jen v `data/a
 Návštěvník vidí hned plně otevřenou tabulku a kalkulačku. Za kontakt dostane osobní souhrn (viz 3).
 
 Tabulka (5 fondů), sloupce:
+
 - ticker a název,
 - burza podle stránky emitenta (u VOO a VTI "neuvedeno"),
 - TER s odkazem na zdroj a datem načtení,
@@ -26,6 +27,7 @@ Nadpis říká "americká ETF", ne "NYSE". [fakt] QQQ je kótován na Nasdaq (Na
 Řazení: podle TER, s popiskem "řazeno podle TER".
 
 Dostupnost a brokeři:
+
 - Stránka cituje brokera jeho vlastními slovy a s datem načtení ("Broker na svých stránkách uvádí..."), nikdy jako vlastní fakt.
 - Doložené: Interactive Brokers (znalostní báze, obecně blokováno pro retail z EHP a UK, bez tickerů) a Fio (klienti mohou obchodovat americká ETF bez omezení, ale bez poradenství a aktivní nabídky; datum článku doplní autor).
 - Degiro, XTB, Portu: [neověřeno], bez tvrzení.
@@ -43,6 +45,7 @@ Moment: po zobrazení tabulky a výsledku kalkulačky pro jeden fond.
 Formulář: e-mail (povinný), souhlas. Skrytý honeypot, v databázi se neukládá.
 
 Varianta V1, osobní souhrn. Vše se generuje v prohlížeči, bez serveru a bez e-mailu:
+
 - souhrn na obrazovce: částka, horizont, 5 fondů, rozpis po letech, otázky pro brokera,
 - tlačítko "Zkopírovat souhrn jako text".
 
@@ -57,6 +60,7 @@ Nic neslibujeme: ani e-mail, ani PDF.
 Srovnávací tabulka: celá viditelná, viz 2.
 
 Kalkulačka: označená "poplatek fondu (TER), bez zhodnocení a bez poplatků brokera".
+
 - Předpoklad na stránce: "vklad na začátku každého měsíce, poplatek TER/12 měsíčně z hodnoty držené v daném měsíci, zhodnocení 0 %, bez poplatků brokera a směny měn."
 - Vzorec a testovací vektory: příloha A.
 - Rozdíl mezi nejnižším a nejvyšším TER je v ilustraci 4 537,50 Kč za 10 let při vložených 600 000 Kč. Kalkulačka neříká "kolik vás to stojí celkem".
@@ -67,7 +71,10 @@ Kvíz: ne.
 ## 5. Měření (Supabase, tabulky events a leads)
 
 - Události: `page_view`, `cta_click`, `calc_used`, `form_start`, `form_submit`.
-- `events`: id, session_id, name, created_at. Žádné osobní údaje.
+  events: id, session_id, name, variant, created_at
+- variant text, nullable. Значение из utm_content при загрузке страницы ('a' | 'b').
+  Если utm_content нет или значение другое, пишем NULL.
+- CHECK (variant IS NULL OR variant IN ('a','b'))
 - `leads`: id, email, consent_at, consent_text_version, created_at. `session_id` se do `leads` nezapisuje.
 - [doporučení] Tabulky nepropojit. Důvod: události zůstanou anonymní. Kompromis: konverzi nelze přiřadit relaci, jen agregovaně.
 - Session id je náhodné a žije v `sessionStorage`.
@@ -78,7 +85,8 @@ Kvíz: ne.
 
 ## 6. Vizuální základ (malý, promyšlený)
 
-Paleta a písmo se vyberou později podle referencí autora. Zatím:
+Paleta a písmo se vyberou později podle referencí autora. Zatím
+
 - Kandidáti písma: IBM Plex Sans, IBM Plex Serif, Source Sans 3, Source Serif 4. [fakt] Všechny mají podmnožinu `latin-ext` (Google Fonts metadata a CSS API, 9. 10. 2026). Jde o deklaraci podmnožiny, ne test glyfů. Před výběrem projít testovací řetězec "ěščřžýáíéúůďťňó ĚŠČŘŽÝÁÍÉÚŮĎŤŇÓ".
 - Při vlastním hostování nebo `next/font` zapnout `latin-ext`, jinak čeština spadne na záložní písmo.
 - Tón: vykání, krátké věty, každé číslo se zdrojem a datem malým písmem pod ním, žádné vykřičníky ani "odemkněte". Žádný fialový gradient, žádná falešná čísla ani reference.
@@ -133,19 +141,20 @@ Důvod: vklad č. m je držen n-m+1 měsíců, součet je n(n+1)/2. Pro konvenci
 
 Testovací vektory (vklad 5 000 Kč, začátek měsíce; v testu `toBeCloseTo`):
 
-| Případ | Očekávaný výsledek |
-|---|---|
-| n = 0 | 0 |
-| n = 1, TER 0,03 % | 0,125 |
-| n = 12, TER 0,03 % | 9,75 |
-| n = 120, TER 0,03 % | 907,50 |
-| n = 120, TER 0,06 % | 1 815 |
-| n = 120, TER 0,18 % | 5 445 |
-| rok 1 z 120, TER 0,03 % | 9,75 |
-| rok 2 z 120, TER 0,03 % | 27,75 |
-| rok 10 z 120, TER 0,03 % | 171,75 |
+| Případ                   | Očekávaný výsledek |
+| ------------------------ | ------------------ |
+| n = 0                    | 0                  |
+| n = 1, TER 0,03 %        | 0,125              |
+| n = 12, TER 0,03 %       | 9,75               |
+| n = 120, TER 0,03 %      | 907,50             |
+| n = 120, TER 0,06 %      | 1 815              |
+| n = 120, TER 0,18 %      | 5 445              |
+| rok 1 z 120, TER 0,03 %  | 9,75               |
+| rok 2 z 120, TER 0,03 %  | 27,75              |
+| rok 10 z 120, TER 0,03 % | 171,75             |
 
 Vlastnosti k otestování:
+
 - součet ročních poplatků = celkový poplatek,
 - dvojnásobný vklad dává dvojnásobný poplatek,
 - dvojnásobné TER dává dvojnásobný poplatek,

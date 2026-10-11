@@ -97,3 +97,12 @@ Moje rozhodnutí, ne AI:
 ## Session 04
 
 Vzorec a unit test napsal AI (podle přílohy A), já jsem je přepsal ručně a ověřil jsem je testy s hodnotami, které jsem spočítal sám. Původně jsem je chtěl psát sám (viz strategy.md, oddíl 9); rozhodl jsem se jinak.
+
+- Formula (totalFee, feeForYear) and the test file were written by the AI
+  (me as mentor-reviewer chat); I retyped them myself.
+- Calculator logic and UI by the agent, after an approved plan.
+- Checked by hand: mutation checks (broke the formula, tests went red),
+  375 and 1440 px without horizontal scroll, keyboard path, Vercel on a phone.
+- AI errors: regular space before "Kč" (fixed with nbsp), awkward error text
+  "celé číslo let", copy-cs.md out of sync with content.ts, stale comment.
+- Decision: years limited to 20 to avoid unverified Czech compound forms.
