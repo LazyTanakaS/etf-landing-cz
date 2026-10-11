@@ -72,8 +72,8 @@ Kvíz: ne.
 
 - Události: `page_view`, `cta_click`, `calc_used`, `form_start`, `form_submit`.
   events: id, session_id, name, variant, created_at
-- variant text, nullable. Значение из utm_content при загрузке страницы ('a' | 'b').
-  Если utm_content нет или значение другое, пишем NULL.
+- variant text, nullable. Hodnota z utm_content při načtení stránky ('a' | 'b').
+  Pokud utm_content chybí nebo má jinou hodnotu, zapisuje se NULL.
 - CHECK (variant IS NULL OR variant IN ('a','b'))
 - `leads`: id, email, consent_at, consent_text_version, created_at. `session_id` se do `leads` nezapisuje.
 - [doporučení] Tabulky nepropojit. Důvod: události zůstanou anonymní. Kompromis: konverzi nelze přiřadit relaci, jen agregovaně.

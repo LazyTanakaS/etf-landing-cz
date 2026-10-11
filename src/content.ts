@@ -112,7 +112,7 @@ export const brokersContent = {
       retrievedOn: '2026-10-09',
     },
     {
-      id: 'xtb-porto',
+      id: 'xtb-portu',
       text: 'U XTB a Portu jsme k 9.\u00A010.\u00A02026 na jejich vlastních stránkách nenašli tvrzení k americkým ETF. Zeptejte se přímo u nich.',
       source: null,
       retrievedOn: null,

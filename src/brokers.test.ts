@@ -45,7 +45,7 @@ describe('broker block', () => {
     const withoutCite = brokersContent.items.filter(
       (item) => citeParts(item) === null,
     )
-    expect(withoutCite.map((item) => item.id)).toEqual(['xtb-porto'])
+    expect(withoutCite.map((item) => item.id)).toEqual(['xtb-portu'])
   })
 
   it('every link goes to https and every citation has a link', () => {

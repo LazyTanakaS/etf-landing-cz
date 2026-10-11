@@ -137,22 +137,22 @@ Kde si agent nebyl jistý:
 
 ## Session 06: funnel tracking
 
-- Tracker is a pure module with injected dependencies (no jsdom needed);
-  62 tests passing, 12 mutations on tracker.ts, all caught.
-- Mentor error caught by the agent: I specified calc_used as "first valid
-  result", but the calculator shows a valid result on load (default values), so
-  it would have fired for every visitor. Fixed: it counts only after the first
-  change of fund, deposit or years.
-- A test was blind at first: vi.fn() attaches its own handler to a returned
-  promise, so a missing .catch was never an unhandled rejection. The test now
-  uses a plain function and listens for unhandledRejection.
-- funnel.sql was checked on a temporary local PostgreSQL with made-up data,
-  not on my Supabase project.
-- Session id lives in memory only (no sessionStorage, cookies), a deliberate
-  trade-off: a reload is a new session. Whether sending a random id without
-  consent falls under law 127/2005 is unverified; left for the operator.
-- Verified by hand: build + preview, five events once each, variant "a" from
-  utm_content, test rows deleted.
+- Tracker je čistý modul s injektovanými závislostmi (nepotřebuje jsdom);
+  prochází 62 testů, 12 mutací v `tracker.ts`, všechny zachyceny.
+- Chyba v mém zadání, kterou zachytil agent: `calc_used` jsem zadal jako „první
+  platný výsledek", ale kalkulačka ukazuje platný výsledek hned po načtení
+  (výchozí hodnoty), takže by se spustil každému návštěvníkovi. Opraveno: počítá
+  se až po první změně fondu, vkladu nebo let.
+- Test byl zpočátku slepý: `vi.fn()` si na vrácený promise přidá vlastní handler,
+  takže chybějící `.catch` nikdy nevytvořilo nezachycenou rejection. Test teď
+  používá obyčejnou funkci a poslouchá `unhandledRejection`.
+- `funnel.sql` jsem ověřil na dočasné lokální PostgreSQL s vymyšlenými daty, ne
+  na svém projektu Supabase.
+- Session id žije jen v paměti (žádný sessionStorage ani cookies), vědomý
+  kompromis: obnovení stránky je nová session. Zda odesílání náhodného id bez
+  souhlasu spadá pod zákon 127/2005, není ověřeno; nechávám to na provozovateli.
+- Ručně ověřeno: build + preview, pět událostí vždy jednou, varianta „a" z
+  `utm_content`, zkušební řádky smazány.
 
 ## Session 06b: vizuální styl
 
@@ -210,7 +210,7 @@ Převzato z designu (bundle, artboard "Souhrn po odeslání formuláře" a blok 
 Odchylky od designu:
 
 - `@media` místo container queries.
-- Brokeři bez `<figure>`, `<blockquote>` a velké uvozovky `„` (jsou to parafráze); položky mají stejné odsazení, XTB a Porto bez pomlčky a bez `<cite>`.
+- Brokeři bez `<figure>`, `<blockquote>` a velké uvozovky `„` (jsou to parafráze); položky mají stejné odsazení, XTB a Portu bez pomlčky a bez `<cite>`.
 - V `<cite>` jsou odkazy na zdroje (u Degira zvlášť "česká" a "anglická"). V designu odkazy nejsou.
 - `sc-raw-table` z exportu nahrazeno `table`, `thead`, `th scope`. Hlavička sloupců v hlavní tabulce se smí zalamovat (jinak byl na desktopu useknutý sloupec s poplatkem); čísla se nezalamují.
 - Obsah rozpisu v designu není (je jen zavřený `<details>`), tabulku rok × pět fondů jsem navrhl podle `.sumtable`.
@@ -233,3 +233,5 @@ Neověřeno:
 - Prefix `[PROVOZOVATEL]` a `[právní riziko]` texty zůstávají k posouzení provozovatelem.
 - Věrnost vůči designu je ověřená okem na screenshotech, ne pixelovým porovnáním.
 - `favicon.ico` vrací 404 (už před touto session).
+
+Názvy fondů: názvy v `src/data/etfs.ts` jsou ze stránek emitentů (adresy v `sourceUrl`), ověřeno 11. 10. 2026 a zapsáno do `data/etf-sources.md`, oddíl Fund names (IVV a SCHD z nadpisu h1, VOO a VTI z `<title>` stránky). U QQQ je "Invesco QQQ ETF" název z textu stránky, protože nadpis je "About QQQ" a `<title>` název fondu neobsahuje; právní subjekt se na stránce jmenuje "Invesco QQQ Trust". Stránka Schwab pro SCHD vrátila curl i WebFetch 403, načíst šla jen v Chrome. Test `src/data/etfs.test.ts` hlídá, že žádný fond nemá `name === null`, prázdný název ani zástupný text; mutace (null, zástupný text, prázdný řetězec) zachytil. Nic z toho nebylo doplněno z paměti.
