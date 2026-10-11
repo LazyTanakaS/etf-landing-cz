@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readAdVariant } from './variant'
+import { pickHeroVariant, readAdVariant } from './variant'
 
 describe('readAdVariant', () => {
   it('reads a and b', () => {
@@ -44,5 +44,32 @@ describe('readAdVariant', () => {
     )
     expect(readAdVariant('?utm_content=a&utm_content=b')).toBe('a')
     expect(readAdVariant('?utm_content=c&utm_content=a')).toBeNull()
+  })
+})
+
+describe('pickHeroVariant', () => {
+  it('a and A give hero A', () => {
+    expect(pickHeroVariant('?utm_content=a')).toBe('A')
+    expect(pickHeroVariant('?utm_content=A')).toBe('A')
+  })
+
+  it('b and B give hero B', () => {
+    expect(pickHeroVariant('?utm_content=b')).toBe('B')
+    expect(pickHeroVariant('?utm_content=B')).toBe('B')
+  })
+
+  it('any other value gives hero A', () => {
+    expect(pickHeroVariant('?utm_content=c')).toBe('A')
+  })
+
+  it('empty value and missing parameter give hero A', () => {
+    expect(pickHeroVariant('?utm_content=')).toBe('A')
+    expect(pickHeroVariant('')).toBe('A')
+    expect(pickHeroVariant('?utm_source=x')).toBe('A')
+  })
+
+  it('shares the parsing of readAdVariant (spaces, other parameters)', () => {
+    expect(pickHeroVariant('?utm_content=+B+')).toBe('B')
+    expect(pickHeroVariant('?utm_source=x&utm_content=b')).toBe('B')
   })
 })

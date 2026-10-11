@@ -19,7 +19,7 @@ export function Hero({ variant }: HeroProps) {
             <div>
               <a
                 className="btn btn-wide"
-                href="#kalkulacka"
+                href={content.anchor}
                 onClick={() => track('cta_click')}
               >
                 {content.cta}

@@ -5,8 +5,14 @@ export function totalFee(deposit: number, ter: number, months: number): number {
   return (deposit * (ter / 12) * (months * (months + 1))) / 2
 }
 
-export function feeForYear(deposit: number, ter: number, year: number): number {
-  const first = 12 * (year - 1) + 1
-  const last = 12 * year
-  return (deposit * (ter / 12) * ((first + last) * 12)) / 2
+// Cumulative fee after k years, for k = 1..years: totalFee(deposit, ter, 12 * k).
+// The last item is the same call as the fee in the main summary table.
+export function cumulativeFees(
+  deposit: number,
+  ter: number,
+  years: number,
+): number[] {
+  return Array.from({ length: years }, (_, index) =>
+    totalFee(deposit, ter, 12 * (index + 1)),
+  )
 }

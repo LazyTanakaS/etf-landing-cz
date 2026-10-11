@@ -62,3 +62,44 @@ export function ChevronIcon() {
     </svg>
   )
 }
+
+// Arrow in front of the <summary> of the by-year breakdown. CSS rotates it when
+// the <details> is open.
+export function DisclosureIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M6 3.5l4.5 4.5L6 12.5"
+        fill="none"
+        stroke="#7A4A2B"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function CopyIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+      <rect
+        x="6"
+        y="6"
+        width="9"
+        height="10"
+        rx="1.5"
+        fill="none"
+        stroke="#411E0A"
+        strokeWidth="2"
+      />
+      <path
+        d="M3.5 12V3.5A1.5 1.5 0 0 1 5 2h7"
+        fill="none"
+        stroke="#411E0A"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}

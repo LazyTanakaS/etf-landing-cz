@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { feeForYear, totalFee } from './fees'
+import { cumulativeFees, totalFee } from './fees'
+import { formatCzk } from './format'
 import { etfs } from './data/etfs'
 
 describe('totalFee', () => {
@@ -26,19 +27,41 @@ describe('totalFee', () => {
   })
 })
 
-describe('feeForYear', () => {
-  it('matches appendix A', () => {
-    expect(feeForYear(5000, 0.0003, 1)).toBeCloseTo(9.75)
-    expect(feeForYear(5000, 0.0003, 2)).toBeCloseTo(27.75)
-    expect(feeForYear(5000, 0.0003, 10)).toBeCloseTo(171.75)
+describe('cumulativeFees', () => {
+  it('has one item per year', () => {
+    expect(cumulativeFees(5000, 0.0003, 1)).toHaveLength(1)
+    expect(cumulativeFees(5000, 0.0003, 10)).toHaveLength(10)
+    expect(cumulativeFees(5000, 0.0003, 20)).toHaveLength(20)
   })
 
-  it('adds up to the total fee over 10 years', () => {
-    let sum = 0
-    for (let year = 1; year <= 10; year++) {
-      sum += feeForYear(5000, 0.0003, year)
+  it('item k is totalFee after 12 * k months', () => {
+    const rows = cumulativeFees(5000, 0.0003, 10)
+    expect(rows[0]).toBe(totalFee(5000, 0.0003, 12))
+    expect(rows[0]).toBeCloseTo(9.75)
+    expect(rows[4]).toBe(totalFee(5000, 0.0003, 60))
+  })
+
+  it('last row is exactly the fee of the main table (5 000 Kc, 10 years)', () => {
+    const cases = [
+      { ter: 0.0003, shown: '907,50\u00A0Kč' },
+      { ter: 0.0006, shown: '1\u00A0815,00\u00A0Kč' },
+      { ter: 0.0018, shown: '5\u00A0445,00\u00A0Kč' },
+    ]
+    for (const { ter, shown } of cases) {
+      const rows = cumulativeFees(5000, ter, 10)
+      expect(rows[9]).toBe(totalFee(5000, ter, 120))
+      expect(formatCzk(rows[9], 2)).toBe(shown)
     }
-    expect(sum).toBeCloseTo(totalFee(5000, 0.0003, 120))
+    expect(cumulativeFees(5000, 0.0003, 10)[9]).toBeCloseTo(907.5)
+    expect(cumulativeFees(5000, 0.0006, 10)[9]).toBeCloseTo(1815)
+    expect(cumulativeFees(5000, 0.0018, 10)[9]).toBeCloseTo(5445)
+  })
+
+  it('grows from year to year', () => {
+    const rows = cumulativeFees(5000, 0.0018, 20)
+    for (let i = 1; i < rows.length; i++) {
+      expect(rows[i]).toBeGreaterThan(rows[i - 1])
+    }
   })
 })
 

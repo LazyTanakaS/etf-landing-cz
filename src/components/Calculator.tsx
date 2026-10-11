@@ -16,13 +16,22 @@ import { AlertIcon, ChevronIcon } from './Icons'
 
 interface CalculatorProps {
   items: readonly Etf[]
+  // The typed text lives in App, so the summary can use the same scenario.
+  depositText: string
+  yearsText: string
+  onDepositTextChange: (value: string) => void
+  onYearsTextChange: (value: string) => void
 }
 
-export function Calculator({ items }: CalculatorProps) {
+export function Calculator({
+  items,
+  depositText,
+  yearsText,
+  onDepositTextChange,
+  onYearsTextChange,
+}: CalculatorProps) {
   const text = calculatorContent
   const [ticker, setTicker] = useState(items[0].ticker)
-  const [depositText, setDepositText] = useState('5000')
-  const [yearsText, setYearsText] = useState('10')
   // An error shows after the field is left, and stays live from then on.
   const [depositTouched, setDepositTouched] = useState(false)
   const [yearsTouched, setYearsTouched] = useState(false)
@@ -107,7 +116,7 @@ export function Calculator({ items }: CalculatorProps) {
                 autoComplete="off"
                 value={depositText}
                 onChange={(event) => {
-                  setDepositText(event.target.value)
+                  onDepositTextChange(event.target.value)
                   setInteracted(true)
                 }}
                 onBlur={() => setDepositTouched(true)}
@@ -139,7 +148,7 @@ export function Calculator({ items }: CalculatorProps) {
                 autoComplete="off"
                 value={yearsText}
                 onChange={(event) => {
-                  setYearsText(event.target.value)
+                  onYearsTextChange(event.target.value)
                   setInteracted(true)
                 }}
                 onBlur={() => setYearsTouched(true)}

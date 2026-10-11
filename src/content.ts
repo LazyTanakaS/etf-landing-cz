@@ -1,14 +1,24 @@
 // All Czech page copy lives here, word for word from docs/copy-cs.md.
 // Components only render it. Change the wording in the doc first.
 
-// docs/copy-cs.md, section 2 (hero). Only variant A for now.
+// docs/copy-cs.md, section 2 (hero). `anchor` is where the CTA scrolls to.
 export const heroContent = {
   A: {
     heading: 'Kolik činí poplatek fondu za 10 let?',
     subheading:
       'Pět amerických ETF vedle sebe. U každého poplatek fondu (TER), zdroj a datum. A kalkulačka, která poplatek spočítá pro vaši částku.',
     cta: 'Spočítat poplatek',
+    anchor: '#kalkulacka',
     note: 'Informativní obsah, nejde o investiční doporučení a investice nesou riziko ztráty.',
+    riskLinkLabel: 'Poučení o rizicích',
+  },
+  B: {
+    heading: 'Dá se americké ETF koupit u vašeho brokera?',
+    subheading:
+      'Záleží na brokerovi. Níže je pět amerických ETF v jedné tabulce a to, co o nich brokeři uvádějí na svých stránkách.',
+    cta: 'Zobrazit tabulku',
+    anchor: '#tabulka',
+    note: 'Shrnujeme, co brokeři uvádějí na svých stránkách, načteno 9. 10. 2026. Stav u konkrétního fondu si ověřte u svého brokera před nákupem. Informativní obsah, nejde o investiční doporučení. Investice nesou riziko ztráty.',
     riskLinkLabel: 'Poučení o rizicích',
   },
 } as const
@@ -37,6 +47,78 @@ export const tableContent = {
   notes:
     'QQQ je podle stránky emitenta kótován na Nasdaq, ne na NYSE. Poplatek fondu je jen jedna ze složek nákladů. Poplatky brokera, směna měn a daně v něm nejsou.',
 } as const
+
+// docs/copy-cs.md, section 4 (what the brokers say). These are paraphrases of
+// the broker pages, not quotes: no quotation marks around them. The sentence on
+// screen is `text` + ' ' + '(' + source + ', načteno ' + date + '.)' and must
+// match the doc word for word (brokers.test.ts checks it against the doc).
+// Facts only from data/availability.md, read on 2026-10-09.
+export interface SourcePart {
+  text: string
+  url?: string
+}
+
+export interface BrokerItem {
+  id: string
+  text: string
+  // null = nothing found, so there is nothing to cite (XTB and Portu).
+  source: readonly SourcePart[] | null
+  // ISO date the source page was read.
+  retrievedOn: string | null
+}
+
+export const brokersContent = {
+  heading: 'Co uvádějí brokeři',
+  items: [
+    {
+      id: 'ibkr',
+      text: 'Interactive Brokers na svých stránkách uvádí, že americká ETF jsou pro neprofesionální zákazníky z EHP a Spojeného království obecně blokována, protože nemají KID.',
+      source: [
+        {
+          text: 'Znalostní báze IBKR',
+          url: 'https://ibkb.interactivebrokers.com/node/2993',
+        },
+        { text: ', stránka bez data' },
+      ],
+      retrievedOn: '2026-10-09',
+    },
+    {
+      id: 'degiro',
+      text: 'Degiro na svých stránkách uvádí, že obecně nenabízí ETF bez KID v jazyce klienta a že se to týká nových nákupů. Stávající pozice lze podle stránek držet a prodat. Anglická stránka dodává, že americké produkty jsou dotčeny zvlášť. Česká stránka americká ETF nezmiňuje.',
+      source: [
+        { text: 'Helpdesk Degiro, ' },
+        {
+          text: 'česká',
+          url: 'https://www.degiro.cz/helpdesk/trading-possibilities/impact-new-priips-regulation',
+        },
+        { text: ' a ' },
+        {
+          text: 'anglická',
+          url: 'https://www.degiro.com/uk/helpdesk/trading-possibilities/why-cant-i-trade-us-etfs',
+        },
+        { text: ' stránka, obě bez data' },
+      ],
+      retrievedOn: '2026-10-09',
+    },
+    {
+      id: 'fio',
+      text: 'Fio ve svém článku z 19.\u00A01.\u00A02022 uvádí, že klienti mohou americká ETF obchodovat bez omezení, ale bez poradenství a aktivní nabídky. Jmenuje VOO a IVV. Článek je starý, stav se mohl změnit.',
+      source: [
+        {
+          text: 'Článek Fio',
+          url: 'https://www.fio.cz/zpravodajstvi/odborne-clanky/238722-americka-burza-jak-investovat-do-indexu-s-p-500',
+        },
+      ],
+      retrievedOn: '2026-10-09',
+    },
+    {
+      id: 'xtb-porto',
+      text: 'U XTB a Portu jsme k 9.\u00A010.\u00A02026 na jejich vlastních stránkách nenašli tvrzení k americkým ETF. Zeptejte se přímo u nich.',
+      source: null,
+      retrievedOn: null,
+    },
+  ] as readonly BrokerItem[],
+}
 
 // docs/copy-cs.md, section 5 (calculator). Labels are the text only, the units
 // stand next to the fields. Error texts and year forms: see the same section.
@@ -106,6 +188,52 @@ export const leadFormContent = {
   sendError:
     'Odeslání se nepodařilo. Zkontrolujte připojení a zkuste to znovu. Váš e-mail ve formuláři zůstal.',
   retry: 'Zkusit znovu',
+} as const
+
+// docs/copy-cs.md, section 7 (summary after the form). Two texts are marked
+// "návrh, schválí autor; schváleno autorem" in the doc (by-year note, copy error).
+export const summaryContent = {
+  heading: 'Váš souhrn',
+  // Years and their word stay together on one line (no-break space).
+  scenario: (
+    deposit: string,
+    years: number,
+    yearsForm: string,
+    invested: string,
+  ) =>
+    `Měsíční vklad ${deposit}, doba ${years}\u00A0${yearsForm}, vloženo celkem ${invested}.`,
+  columns: {
+    fund: 'fond',
+    ter: 'poplatek fondu (TER)',
+  },
+  feeColumn: (years: number, yearsForm: string) =>
+    `poplatek fondu za ${years}\u00A0${yearsForm}`,
+  byYearSummary: 'Poplatek fondu po jednotlivých letech (rozpis)',
+  yearColumn: 'Rok',
+  byYearNote: 'Součet od začátku investování do konce daného roku.',
+  disclaimer:
+    'Ilustrace, výpočet, při předpokladech uvedených u kalkulačky. Není to investiční doporučení.',
+  questionsHeading: 'Otázky pro brokera',
+  questions: [
+    'Mohu u vás jako neprofesionální zákazník koupit toto ETF (burzovní symbol)?',
+    'Je pro nákup potřeba sdělení klíčových informací (KID)? Pokud ano, kde ho najdu?',
+    'Jaké poplatky účtujete za nákup a držení?',
+    'Je nutná směna měn a kolik stojí?',
+    'Poskytujete k nákupu poradenství, nebo jen provedete můj pokyn?',
+  ],
+  copyButton: 'Zkopírovat souhrn jako text',
+  copied: 'Zkopírováno.',
+  copyFailed: 'Kopírování se nepodařilo. Text si označte a zkopírujte ručně.',
+  closing:
+    'Souhrn vám e-mailem neposíláme, zůstane jen na této obrazovce. Zkopírujte si ho.',
+  // Plain-text lines for the clipboard (the text is built in summary.ts).
+  textFundLine: (
+    ticker: string,
+    ter: string,
+    years: number,
+    yearsForm: string,
+    fee: string,
+  ) => `${ticker}: TER ${ter}, poplatek fondu za ${years} ${yearsForm}: ${fee}`,
 } as const
 
 // docs/copy-cs.md, section 8 (risk notice). The final wording is for

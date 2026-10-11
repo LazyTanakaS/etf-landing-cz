@@ -973,3 +973,248 @@ main {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Session 07: broker block and summary. Tokens and shapes follow the design
+   bundle (artboard "Souhrn po odeslání formuláře", broker block of the page);
+   media queries instead of container queries, as in the rest of this file. */
+
+/* What the brokers say: thin rules, no cards, no shadows. */
+.quotes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.quote {
+  padding-block: 22px;
+  border-top: var(--rule);
+}
+
+.quote:last-child {
+  border-bottom: var(--rule);
+}
+
+.quote cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Summary. */
+.btn-secondary {
+  background: var(--paper);
+}
+
+.btn-icon {
+  align-items: center;
+}
+
+.btn-icon svg {
+  flex: none;
+}
+
+.sum-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+}
+
+/* minmax(0, 1fr): without it the column grows to the width of the by-year
+   table and the whole page scrolls sideways on a phone. */
+.sum-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-content: start;
+}
+
+.scenario {
+  font-size: var(--fs-lg);
+  line-height: 1.45;
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.tbl-box {
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+.sumtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.sumtable th {
+  text-align: left;
+  vertical-align: bottom;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 10px;
+  background: var(--parchment);
+  border-bottom: var(--border);
+}
+
+.sumtable td,
+.sumtable tbody th {
+  padding: 12px 10px;
+  border-bottom: var(--hair);
+}
+
+/* Row headers (ticker, year) look like cells, not like column headers. */
+.sumtable tbody th {
+  background: transparent;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  font-weight: 400;
+  font-size: inherit;
+  vertical-align: baseline;
+}
+
+.sumtable tbody tr:nth-child(even) td,
+.sumtable tbody tr:nth-child(even) th {
+  background: var(--zebra);
+}
+
+.sumtable tbody tr:last-child td,
+.sumtable tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+.sumtable .r {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Numbers stay on one line, column titles may wrap: otherwise the fee column
+   is cut off in the half-width column on desktop. */
+.sumtable thead .r {
+  white-space: normal;
+}
+
+.sumtable .tk {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.disclosure {
+  border-bottom: var(--hair);
+  padding-bottom: 12px;
+}
+
+.disclosure summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font-weight: 650;
+  color: var(--mocha);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure summary svg {
+  flex: none;
+  transition: transform 0.1s ease;
+}
+
+.disclosure[open] summary svg {
+  transform: rotate(90deg);
+}
+
+.disclosure .tbl-box {
+  margin-bottom: 12px;
+}
+
+.q-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: q;
+}
+
+.q-list li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 12px;
+  border-top: var(--hair);
+}
+
+.q-list li::before {
+  counter-increment: q;
+  content: counter(q) '.';
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  color: var(--mocha);
+}
+
+.done {
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.done:empty {
+  margin: 0;
+}
+
+/* Shown only when copying failed: the text stays selectable. */
+.copy-fallback {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  resize: vertical;
+}
+
+@media (min-width: 40rem) {
+  .sumtable th,
+  .sumtable td {
+    padding-inline: 14px;
+  }
+}
+
+@media (min-width: 60rem) {
+  .quotes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 48px;
+  }
+
+  .quote:nth-last-child(2) {
+    border-bottom: var(--rule);
+  }
+
+  .sum-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 48px;
+  }
+}
