@@ -93,3 +93,7 @@ Moje rozhodnutí, ne AI:
 - České texty v jednom souboru `src/content.ts`, `Hero` jako komponenta s prop `variant`.
 - TER jako zlomek, v buňce jen symbol, názvy fondů doplním ručně z webů emitentů.
 - CTA zatím na `#tabulka`, `noindex` do spuštění reklam, `[PROVOZOVATEL]` zůstává viditelné.
+
+## Session 04
+
+Vzorec a unit test napsal AI (podle přílohy A), já jsem je přepsal ručně a ověřil jsem je testy s hodnotami, které jsem spočítal sám. Původně jsem je chtěl psát sám (viz strategy.md, oddíl 9); rozhodl jsem se jinak.
